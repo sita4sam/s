@@ -1,0 +1,161 @@
+<!DOCTYPE html> 
+
+
+<head>
+<meta charset="UTF-8" />
+    <title> Projects ｜ Samuel Rajkumar </title>
+       <meta name="description" content="Hello, I'm Samuel Rajkumar, AIG Regional Manager." />
+    <meta name="viewport" content="width=device-width , initial-scale=1" />
+     <meta property="og:title" content="Samuel Rajkumar />
+    <meta property="og:type" content="website" />
+     <meta property="og:image" content="./images/share_img.jpg" />
+	 
+   <meta property="og:description" content="Hello, I'm Samuel Rajkumar AIG Regional Manager." />
+   
+    <link sizes="196x196" href="./images/favicon/favicon-196x196.png" type="image/png" rel="icon" />
+    <link sizes="96x96" href="./images/favicon/favicon-96x96.png" type="image/png" rel="icon" />
+    <link sizes="32x32" href="./images/favicon/favicon-32x32.png" type="image/png" rel="icon" />
+    <link sizes="16x16" href="./images/favicon/favicon-16x16.png" type="image/png" rel="icon" />
+    <link sizes="128x128" href="./images/favicon/favicon-128.png" type="image/png" rel="icon" />
+    <meta content=" " name="application-name" />
+    <meta content="#FFFFFF" name="msapplication-TileColor" />
+    <meta content="images/favicon/mstile-144x144.png" name="msapplication-TileImage" />
+    <meta content="images/favicon/mstile-70x70.png" name="msapplication-square70x70logo" />
+    <meta content="images/favicon/mstile-150x150.png" name="msapplication-square150x150logo" />
+    <meta content="images/favicon/mstile-310x150.png" name="msapplication-wide310x150logo" />
+    <meta content="images/favicon/mstile-310x310.png" name="msapplication-square310x310logo" />
+    <!--[if it IE 11]>
+       <script>
+       window.location="./browser.html"
+       </script>
+    <![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+
+<body style="background:none">
+    <div class="loading_view">
+        <span class="loading_box"></span>
+    </div>
+    <!-- <div class="showreel_main">
+        <div class="main_box">
+           <button class="showreel_close" onclick="playPause()"></button>
+            <iframe src="./images/showreel_bg.mp4" width="1280" height="720" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+    </div>
+     <div class="showreel_main_bg"></div> -->
+    <header>
+        <div class="LOGO">
+            <a href="./index.html"></a>
+        </div>
+    </header>
+    <div class="MENU_btn">
+        <div id="MENU_trigger" class="button">
+            <input id="NAV_input" type="checkbox" />
+            <span class="top"></span>
+            <span class="middle"></span>
+            <span class="bottom"></span>
+        </div>
+    </div>
+    <div class="wrapper" id="alert">
+       <div class="showreel_content">
+          <div class="text_box">
+              <h1>100 SECOND</h1>
+              <h2>SHOWREEL VIDEO</h2>
+              <div class="btn_box">
+                 <button class="enter slvj-link-lightbox normal" onclick="playPause()" data-videoid="117045764" data-videosite="vimeo"></button>
+                 <button class="enter slvj-link-lightbox phone" data-videoid="117045764" data-videosite="vimeo"></button>
+              </div>
+          </div>
+       </div>
+       <div class="showreel_mask"></div>
+        
+       <div class="showreel_bg">
+          <video id="showreel" autoplay="" loop="">
+             <source src="./images/showreel_bg.mp4" type="video/mp4">
+          </source></video>
+       </div>
+       <div class="showreel_bg_img"></div>
+        <footer style="position: absolute; top: 100%; width: 100%;">
+                   <p class="copyright">2016 Samuel Rajkumar - All about Sam's experience with AIG</p>
+        </footer>
+    </div>
+    <div class="NAV_mask overlay-hugeinc">
+        <nav>
+            <ul>
+                <li>
+                    <a href="./index.html">
+                        <span class="main">HOME</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./showreel.html">
+                        <span class="main">SHOWREEL</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./projects.html">
+                        <span class="main">PROJECTS</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./about.html">
+                        <span class="main">ABOUT ME</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./mottos.html">
+                        <span class="main">MENTORS</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./contact.html">
+                        <span class="main">CONTACT</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <link rel="stylesheet" type="text/css" href="./css/layout.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./css/content.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="./css/font.css" />
+    <script src="./js/modernizr.custom.js"></script>
+    <script src="./js/jquery.2.1.4.min.js"></script>
+    <script src="./js/lightbox.js"></script>
+    <script src="./js/loading.js"></script>
+    <script src="./js/GA.js"></script>
+    <script> 
+        var myVideo = document.getElementById("showreel"); 
+        function playPause() { 
+        if (myVideo.paused) 
+        myVideo.play(); 
+        else 
+            myVideo.pause(); 
+        } 
+    </script> 
+    <script>
+        $('button.enter').simpleLightboxVideo();
+        $(function(){
+            $(".enter").click(function(){
+                $("body").addClass('fixed');
+            });
+        })
+    </script>
+    <script>
+        $(function(){
+            var WHAT = navigator.userAgent;
+            if (WHAT.match(/(iPhone|iPod|Android)/)){
+               $('.showreel_bg').hide();
+               $('.showreel_bg_img').show();
+               $('button.normal').hide();
+               $('button.phone').show();
+            }else{
+                $('button.normal').show();
+               $('button.phone').hide();
+            }
+        });
+    </script>
+    <script src="./js/classie.js"></script>
+    <script src="./js/NAV.js"></script>
+    <script src="./js/page_jq.js"></script>
+</body>
+
+</html>

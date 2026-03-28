@@ -1,0 +1,2 @@
+first open the psd file and choose the rpoject and then
+open adobe illustrator and dont save as svg format, instead use export as svg format using Adobe illustrator

@@ -1,0 +1,202 @@
+/*
+Digital Hands 2011
+info@digitalhands.net
+*/
+
+::selection { background:#BC6784; color:#fff; }
+::-moz-selection { background:#BC6784; color:#fff; }
+::-webkit-selection { background:#BC6784; color:#fff; }
+
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	line-height:16px;
+	font-weight:normal;
+	color:#5d5d5d;
+	background-color:#FFFFFF;
+}
+
+.dn { display:none !important; }
+.cl { clear:left !important; }
+a { text-decoration:none; }
+p { margin-bottom:15px; }
+
+
+/* - /////////////////////// GENERAL LAYOUT - START //////////////////////////// - */
+header, footer, nav, section, article { display:block; }
+header { width:910px; height:100px; margin:0 auto; }
+section { width:960px; margin:0 auto; }
+.parallaxBox { position:relative; margin:0 auto; overflow:hidden; height:630px; background:url(../images/header_bg.png) no-repeat top center !important; }
+section:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
+footer { position:relative; width:100%; height:662px; background:url(../images/sliders_btn_bg.png) repeat-x top left; padding-top:30px; }
+.footerCenter { position:relative; width:960px; height:662px; margin:0 auto; }	
+/* - /////////////////////// GENERAL LAYOUT - END ///////////////////////////// - */
+
+
+/* - /////////////////////// HEADER - START /////////////////////////////////// - */
+.logo { width:212px; height:62px; float:left; background:url(../images/logo.gif) no-repeat 0 0; margin-top:19px; }
+header nav { float:right; margin-top:40px; color:#dde1e4; font-size:23px; font-family:'FuturaStdLightTrRegular';  }
+header nav a { margin:0 10px 0 10px; font-size:14px; color:#373737; font-family:'FuturaStdBookTrRegular'; }
+header nav a:hover { color:#C98C94; }
+.languageBtn { position:absolute; top:5px; right:5px; font-size:11px; color:#5d5d5d; display:block; cursor:pointer; }
+.languageBtn:hover { color:#C98C94; }
+header nav a.blog { color:#B85C71; }
+/* - /////////////////////// HEADER - END //////////////////////////////////// - */
+
+
+/* - /////////////////////// CONTENT PART - START //////////////////////////// - */
+article { width:960px; float:left; clear:left; padding-top:25px; }
+article h2 { float:left; display:block; font-weight:normal; font-size:25px; color:#5d5d5d; margin-left:25px; font-family:'FuturaStdMediumTrItalic'; }
+article h2 span { font-family:Arial, Helvetica, sans-serif; font-style:italic; }
+article .catSlogan { float:left; clear:both; width:910px; margin:25px 0 0 25px; font-size:15px; color:#919191; font-family:'FuturaStdLightTrRegular'; }
+article .seperator { float:left; width:960px; height:1px; background-color:#dee2e5; margin:20px 0 75px 0; }
+article#services { height:975px; }
+article#portfoy { height:800px; }
+article#whoweare { height:750px; }
+article#referans { height:595px; }
+article#partners { height:300px; }
+
+article nav { float:right; width:375px; height:25px; margin:2px 25px 0 0; }
+article nav a { display:block; float:left; height:25px; cursor:pointer; background:url(../images/nav_bg_en.png) no-repeat 0 0; }
+article nav a.nav1 { width:22px; background-position:0 0; margin-right:11px; }
+article nav a.nav1.selected { background-position:0 0; }
+article nav a.nav2 { width:90px; background-position:-22px 0; }
+article nav a.nav2.selected { background-position:-22px -25px; }
+article nav a.nav3 { width:71px; background-position:-120px 0; }
+article nav a.nav3.selected { background-position:-120px -25px; }
+article nav a.nav4 { width:90px; background-position:-202px 0; }
+article nav a.nav4.selected { background-position:-202px -25px; }
+article nav a.nav5 { width:82px; background-position:-292px 0; }
+article nav a.nav5:hover { background-position:-292px -25px; }
+
+/* Promo Part */
+.promo { width:100%; height:746px; margin-bottom:30px; border-top:1px solid #c4c7cb; background:url(../images/header_bg_back.jpg) no-repeat top center; }
+#parallax { position:absolute; overflow:hidden; width:100%; height:630px; text-align:center; }
+.promo .promoSlogan { width:910px; position:relative; clear:left; color:#8a8a8a; margin:0 auto; margin-top:45px; padding-left:7px; background:url(../images/promo_blockquote_bg.gif) no-repeat 0 0; }
+.promo .promoSlogan p { font-size:21px; line-height:30px; color:#8a8a8a; text-align:left; font-family:'FuturaStdLightTrRegular'; margin-left:29px; }
+.promo .promoSlogan p span { font-family:'FuturaStdBookTrRegular'; }
+/* //Promo Part */
+
+/* Services Part */
+#services .icon { float:left; width:66px; margin:0 38px 0 77px; }
+#services .icon.website { height:60px; background:url(../images/services_part_icons.gif) no-repeat 0 0; }
+#services .icon.online { height:66px; background:url(../images/services_part_icons.gif) no-repeat 0 -60px; }
+#services .icon.mobile { height:74px; background:url(../images/services_part_icons.gif) no-repeat 0 -126px; }
+#services .icon.social { height:60px; background:url(../images/services_part_icons.gif) no-repeat 0 -200px; }
+#services .title { float:left; width:700px; font-size:20px; font-family:'FuturaStdBookTrRegular'; }
+#services .text { float:left; width:640px; font-size:14px; line-height:26px; color:#8c8c8c; margin:20px 0 65px 0; }
+/* //Services Part */
+
+/* Who We Are Part */
+.whoWeBox { float:left; width:220px; margin-right:18px; }
+.whoWeBox.first { margin-left:25px; }
+.whoWeBox.last { margin-right:0; }
+.whoWeBox .img { float:left; width:181px; height:204px; margin-bottom:10px; background:url(../images/leader-teams_photo_bg.jpg) no-repeat 0 0; }
+.whoWeBox .name { float:left; clear:left; width:181px; text-align:center; font-size:14px; line-height:12px; color:#65696e; margin-bottom:55px; font-family:'FuturaStdMediumTrItalic'; }
+.whoWeBox .img.burakidiz { background-position:0 0; }
+.whoWeBox .img.burakidiz:hover { background-position:0 -204px; }
+.whoWeBox .img.cansuturkmen { background-position:-181px 0; }
+.whoWeBox .img.cansuturkmen:hover { background-position:-181px -204px; }
+.whoWeBox .img.erhanidiz { background-position:-362px 0; }
+.whoWeBox .img.erhanidiz:hover { background-position:-362px -204px; }
+.whoWeBox .img.ilkermakovali { background-position:-543px 0; }
+.whoWeBox .img.ilkermakovali:hover { background-position:-543px -204px; }
+.whoWeBox a.links { width:15px; display:block; cursor:pointer; float:left; clear:left; margin-bottom:15px; padding-left:30px; color:#65696e; font-size:13px; background:url(../images/whoweare_social_icons_bg.gif) no-repeat 0 0; font-family:'FuturaStdBookTrItalic'; }
+.whoWeBox a.links:hover { text-decoration:underline; }
+.whoWeBox a.links.twitter { height:12px; background-position:0 0; }
+.whoWeBox a.links.facebook { height:13px; background-position:0 -12px; }
+.whoWeBox a.links.linkedin { height:13px; background-position:0 -25px; }
+.whoWeBox a.links.mail { height:16px; background-position:0 -37px; }
+/* //Who We Are Part */
+
+/* Portfoy Slider Part */
+.slider { width:940px; margin-right:auto; margin-left:auto; background-repeat:no-repeat; position:relative; z-index:1; float:left; }
+.slidertext { width:215px; float:right; position:absolute; top:5px; margin-top:-7px; }
+.slidertext h1, .slidertext p { margin:0px; padding:0px; }
+.slidertext ul { margin:0px; padding:0px; list-style:none; list-style:none; }
+.slidertext li { margin:0px; float:left; padding-bottom:10px; height:130px !important; }
+.slidertext li h4 { float:left; width:215px; font-size:27px; color:#959595; font-weight:normal; padding-bottom:15px; border-bottom:1px solid #dee2e5; font-family:'FuturaStdBookTrRegular'; padding-top:3px; margin-bottom:10px; line-height:30px; }
+.slidertext li .brandBox { float:left; clear:left; margin-bottom:5px; font-size:12px; font-family:'FuturaStdBookTrItalic'; }
+.slidertext li .brandBox span { float:left; display:block; margin-right:10px; font-weight:bold; font-family:'FuturaStdBookTrRegular'; }
+.slidertext li p { float:left; clear:left; font-size:12px; line-height:20px; color:#5c5c5c; margin:5px 0 10px 0; font-family:'FuturaStdBookTrItalic'; padding-bottom:10px; }
+.slidertext li a { float:left; clear:left; font-size:16px; color:#959595; cursor:pointer; font-family:'FuturaStdLightTrItalic'; margin-bottom:5px; }
+.slidertext li .link { float:left; clear:left; font-size:16px; color:#959595; font-family:'FuturaStdLightTrItalic'; margin-bottom:5px; }
+.slidertext li a:hover { text-decoration:underline; }
+.slidertext li a,.link span { font-size:10px; }
+.slider-images { margin-top:5px; float:left; overflow:hidden; border:1px solid #DEE2E5; }
+.slider-images ul li { width:698px; height:422px; }
+.slider-images ul li img { width:698px; height:422px; border:none; }
+.prev { position:absolute; left:22px; top:200px; z-index:144; width:52px; height:52px; background:url(../images/sliders_btn_bg.png) no-repeat 0 0; display:block; cursor:pointer; }
+.prev:hover { background:url(../images/sliders_btn_bg.png) no-repeat 0 -52px; }
+.next { position:absolute; right:260px; top:200px; z-index:51; width:52px; height:52px; background:url(../images/sliders_btn_bg.png) no-repeat -52px 0; display:block; cursor:pointer; }
+.next:hover { background:url(../images/sliders_btn_bg.png) no-repeat -52px -52px; }
+/* //Portfoy Slider Part */
+
+/* Partners Part */
+.partners { float:left; height:28px; margin-right:35px; background:url(../images/partners_logo_bg.jpg) no-repeat 0 0; }
+.partners.first { margin-left:25px; }
+.partners.tbwa { width:253px; background-position:0 0; }
+.partners.tbwa:hover { background-position:0 -28px; }
+.partners.dudu { width:109px; background-position:-253px 0; }
+.partners.dudu:hover { background-position:-253px -28px; }
+.partners.groar { width:89px; background-position:-362px 0; }
+.partners.groar:hover { background-position:-362px -28px; }
+.partners.est { width:83px; background-position:-451px 0; }
+.partners.est:hover { background-position:-451px -28px; }
+.partners.direct { width:159px; background-position:-534px 0; }
+.partners.direct:hover { background-position:-534px -28px; }
+/* //Partners Part */
+
+/* - /////////////////////// CONTENT PART - START //////////////////////////// - */
+
+
+/* - /////////////////////// FOOTER - START ////////////////////////////////// - */
+footer h2 { float:left; display:block; font-weight:normal; font-size:25px; color:#fff; font-style:italic; margin-left:25px; }
+footer .catSlogan { float:left; clear:both; width:910px; margin:25px 0 0 25px; font-size:15px; color:#fff; font-family:'FuturaStdLightTrRegular'; }
+footer .seperator { float:left; width:960px; height:1px; background-color:#8c9299; margin-top:20px; }
+footer nav { float:right; height:25px; margin:2px 25px 0 0; }
+footer nav a { display:block; float:left; height:25px; cursor:pointer; background:url(../images/nav_bg_en.png) no-repeat 0 0; }
+footer nav a.nav1 { width:22px; background-position:0 -50px; margin-right:15px; }
+footer nav a.nav2 { width:90px; background-position:-22px -50px; margin-right:8px; }
+footer nav a.nav3 { width:71px; background-position:-120px -50px; margin-right:4px; margin-left:-3px; }
+footer nav a.nav4 { width:90px; background-position:-202px -50px; }
+footer nav a.nav5 { width:82px; background-position:-292px -50px; }
+footer .formBox { float:left; margin:20px 0 0 25px; }
+footer .map { float:right; margin:20px 25px 0 0; }
+footer .formBox .left { float:left; margin-right:20px; }
+footer .formBox .right { float:left; }
+.formBox label { float:left; clear:left; display:block; width:215px; font-size:14px; color:#FFFFFF; margin-bottom:8px; font-family:'FuturaStdBookTrRegular'; }
+.formBox .input { float:left; display:block; clear:left; width:203px; padding:7px 5px 7px 5px; background-color:#FFFFFF; border:1px solid #fff; color:#5d5d5d; margin-bottom:20px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; font-family:Arial, Helvetica, sans-serif; }
+.formBox .textarea { float:left; clear:left; width:440px; height:138px; padding:5px; background-color:#FFFFFF; border:1px solid #fff; color:#5d5d5d; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; font-family:Arial, Helvetica, sans-serif; font-size:12px; }
+.formBox input.sendBtn { float:left; clear:left; display:block; width:115px; height:37px; background:url(../images/contact_send_btn_bg.png) #545861 no-repeat 0 0; margin-top:20px; cursor:pointer; border:none; opacity:0.8; filter:alpha(opacity=80); }
+.formBox input.sendBtn:hover { opacity:1.0; filter:alpha(opacity=100); }
+.map .mapBox { border:6px solid #4e5159; margin-bottom:43px; }
+.map .mapBox iframe { border:none; margin:0; padding:0; overflow:hidden; }
+.map label { float:left; clear:left; font-size:15px; color:#FFFFFF; font-family:'FuturaStdLightTrItalic'; }
+.map p { font-size:13px; color:#FFFFFF; clear:left; float:left; margin-top:15px; line-height:19px; font-family:'FuturaStdBookTrRegular'; }
+.map p a { color:#FFFFFF; }
+.map p a:hover { text-decoration:underline; }
+
+.footerCenter .bottomCopy { width:910px; position:absolute; left:25px; bottom:13px; font-size:13px; color:#5d5d5d; }
+.footerCenter .bottomCopy .copyrigh { float:left; margin-top:6px; font-family:'FuturaStdBookTrRegular'; }
+.footerCenter .bottomCopy .followBox { float:right; font-style:italic; }
+.footerCenter .bottomCopy .followBox span { float:left; display:block; margin-top:6px; font-family:'FuturaStdBookTrItalic'; }
+.footerCenter .bottomCopy .followBox a { width:28px; height:28px; float:left; display:block; cursor:pointer; margin-left:15px; opacity:0.8; filter:alpha(opacity=80); background:url(../images/footer_social_share_icons.png) #fff no-repeat 0 0; }
+.footerCenter .bottomCopy .followBox a:hover { opacity:1.0; filter:alpha(opacity=100); }
+.footerCenter .bottomCopy .followBox a.facebook { background-position:0 0; }
+.footerCenter .bottomCopy .followBox a.twitter { background-position:0 -28px; }
+.footerCenter .bottomCopy .followBox a.linkedin { background-position:0 -56px; }
+.footerCenter .bottomCopy .followBox a.fizy { background-position:0 -84px; }
+/* - /////////////////////// FOOTER - END //////////////////////////////////// - */
+
+/*--------- IE7 Hack ---------*/
+*:first-child+html footer { overflow:hidden; }
+*:first-child+html #services .icon { clear:left; }
+*:first-child+html article h2 { padding-top:3px; }
+*:first-child+html .slidertext li .brandBox { width:210px; }
+*:first-child+html .slidertext li .brandBox { padding-bottom:12px; }
+*:first-child+html .whoWeBox.first { clear:left; }
+*:first-child+html .partners.first { clear:left; }
+*:first-child+html .formBox .textarea { margin-right:-10px; }
+*:first-child+html footer .formBox .right { margin-bottom:15px; }
+/*-------- //IE7 Hack --------*/

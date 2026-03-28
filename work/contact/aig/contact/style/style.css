@@ -1,0 +1,333 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0; padding:0;}
+.clearFix{clear:both;}
+.left{float:left;}
+.right{float:right;}
+a{text-decoration:none;}
+a, img{border:none;}
+@font-face {
+	font-family: 'RockSalt';
+	src: url('../fonts/RockSalt.eot');
+	src: local('â˜º'), url('../fonts/RockSalt.woff') format('woff'), url('../fonts/RockSalt.ttf') format('truetype'), url('../fonts/RockSalt.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'LeagueGothic-Regular';
+	src: url('../fonts/LeagueGothic-Regular.eot');
+	src: local('â˜º'), url('../fonts/LeagueGothic-Regular.woff') format('woff'), url('../fonts/LeagueGothic-Regular.ttf') format('truetype'), url('../fonts/LeagueGothic-Regular.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+body{
+	background:#333;
+	font-family:'RockSalt';
+	font-size:15px;
+	color:#000;
+}
+.wraper{
+	width:999px;
+	margin:auto;
+	border:0px solid red;
+}
+.header{
+	background:url(../images/bg-top.png) no-repeat left top;
+	height:87px;
+	margin-top:7px;
+}
+.logo{
+	float:left;
+	width:265px;
+	margin:15px 0 0 80px;
+}
+.menu{
+	margin:24px 70px 0 0;
+}
+.menu a{
+	font-family:'LeagueGothic-Regular';
+	font-size:31px;
+	color:#775237;
+	text-transform:uppercase;
+   -webkit-stroke-width: 1.3px;
+   -webkit-stroke-color: #c1bcb2;
+   -webkit-fill-color: #c1bcb2;
+   text-shadow: 2px 0px 20px #c1bcb2;
+   padding-right:31px;
+   float:left;
+   
+}
+.menu a:hover{
+	color:#3E2A23;
+}
+.menu a.selected{
+	color:#3E2A23;
+}
+.contentOuter{
+	background:url(../images/bg-mid.jpg) repeat-y center top;
+}
+.content{
+	width:836px;
+	margin:auto;
+	border:0px solid red; 
+	padding:0px 17px 0 17px;
+}
+.heading{
+	background:url(../images/bg-heading.png) no-repeat left top;
+	font-family:'RockSalt';
+	font-size:15px;
+	color:#000;
+	height: 58px;
+    padding-left: 10px;
+    padding-top: 9px;
+    width: 232px;
+}
+.informationalH{
+	margin-top:27px;
+	margin-bottom:10px;
+}
+.headingInner{
+	background:url(../images/bg-heading.png) no-repeat left top;
+	font-family: 'RockSalt';
+    font-size: 14px;
+    height: 44px;
+    margin: 0 0 0 114px;
+    padding-left: 0;
+    padding-top: 8px;
+    position: absolute;
+    text-align: center;
+    width: 242px;
+    z-index: 1;
+}
+.headingContact{
+	font-size:20px;
+	padding:0 0 0 47px;
+}
+.subsHeading{
+	background:url(../images/bg-heading.png) no-repeat left top;
+	font-family:'RockSalt';
+	font-size:15px;
+	color:#000;
+	height: 58px;
+    padding-left: 19px;
+    padding-top: 9px;
+    width: 288px;
+	margin-left:278px;
+}
+.websites img{
+	margin-right:32px;
+}
+.websites .name{
+	margin-top: -54px;
+	padding-left:26px;
+	font-size:14px;
+	position:absolute;
+}
+.websites .name a{
+	color:#000;
+}
+.websites .name span{
+	font-size:10px;
+	background:url(../images/bg-pipe.gif) no-repeat left top;
+	padding-left:10px;
+}
+.websites .name div.smallFont{
+	background:none;
+	float: left;
+    font-size: 11px;
+    line-height: 14px;
+    padding-left: 00px;
+    text-align: center;
+    width: 110px;
+}
+.smallFont{
+	font-size:11px !important;
+	padding-top:5px; 
+}
+.websites .name div.bg{
+	background:url(../images/bg-pipe.gif) no-repeat left 10px;
+	padding-left:12px;
+	font-size:13px;
+	font-size:11px;
+	width:110px;
+	float:left
+}
+.websites .name span.smallFont{
+	background:none;
+}
+.subWebsites .subscName{
+	margin-top:-52px;
+	font-size:14px;
+}
+.subWebsites .subscName a{
+	color:#000;
+}
+.subWebsites .subscName1{
+	width: 223px;
+	padding-left:195px;
+	position:absolute;
+	line-height:20px;
+}
+.subWebsites .subscName2{
+	padding-left:37px;
+}
+.subscName1 .smallFont{
+	font-size:12px;
+	width:104px;
+}
+.subWebsites .subscName span {
+    background: url("../images/bg-pipe.gif") no-repeat scroll left center transparent;
+    float: left;
+    font-size: 12px;
+    line-height: 39px;
+    padding-left: 10px;
+}.websites .nomargin img{
+	margin:0px;	
+}
+.websites .marginTop{
+	margin-top:-60px;
+}
+.subWebsites{ margin-bottom:-42px;}
+.subWebsites .marginLeft img{
+	margin-left:170px;
+	margin-right:41px
+}
+.bottom{
+	background:url(../images/bg-bottom.png) repeat-y left top;
+	height:91px;
+	margin-bottom:24px;
+}
+.socialMedia{
+	float:right;
+	margin:25px 77px 0 0;
+}
+.copyright{
+	font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:11px;
+	color:#939393;
+	margin-bottom:32px;
+}
+.copyright a{
+	color:#fff;
+	text-decoration:underline;
+}
+.address{
+	background:url(../images/bg-contact.png) no-repeat left top;
+	width:445px;
+	height:286px;
+	padding:48px 0 0 13px;
+	margin:25px 0 0 30px;
+}
+.address form{
+	width:198px;
+}
+.address input{
+	width:181px;
+	border:1px solid #A1A1A1;
+	height:18px;
+	margin-bottom:10px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-style:italic;
+	padding-left:10px;
+}
+.address textarea{
+	width:181px;
+	border:1px solid #A1A1A1;
+	height:125px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:10px;
+	font-style:italic;
+	padding-left:10px;
+	margin-bottom:6px;
+}
+.address button{
+	background:url(../images/img-send-mail.png) no-repeat left top;
+	height:32px;
+	width:102px;
+	cursor:pointer;
+	border:none;
+	margin-left:139px;
+}
+.emailAdd{
+	font-size: 17px;
+    padding: 70px 0 0 26px;
+    text-align: center;
+    width: 175px;
+}
+.emailAdd span{
+	line-height:27px;
+}
+.addPicture{
+	float: left;
+    margin-left: 37px;
+    margin-top: -45px;
+}
+.aboutMe{
+	background:url(../images/bg-about.png) no-repeat left top;
+	height: 519px;
+    line-height: 24px;
+    margin-top: 22px;
+    padding: 68px 37px 0 76px;
+    width: 330px;
+}
+.evanPic{
+	width:393px;
+	margin:65px 0 0 0;
+}
+.headingEdu{
+	margin-left: 45px;
+    margin-top: 28px;
+}
+.education{
+	font-size:14px;
+}
+.bgEducation{
+	background:url(../images/bg-education.png)  no-repeat left top;
+	width:347px;
+	height:247px;
+}
+.bsManagement {
+	margin:0 0 0 54px;
+}
+.bgEducation .text{
+	padding:62px 12px 0 12px;
+}
+.bgEducation .text span{
+	line-height:25px;
+}
+.bgEducation .text span p{
+	line-height:20px;
+}
+.schoolLaw {
+	margin:-45px 0 0 48px;
+}
+.marshallSchool{
+	margin:-55px 0 0 -157px;
+	font-size:12px;
+}
+.marshallSchool .text{
+	padding-top:55px;
+}
+
+input.button{
+	background: url("../images/img-send-mail.png") no-repeat scroll left top transparent;
+    border: medium none;
+    cursor: pointer;
+    height: 26px;
+    margin-left: 111px;
+    width: 82px;
+	}
+.emailAdd span a{
+	font-size: 17px;
+    color: #000000;
+    font-family: 'RockSalt';
+}
+.subWebsites .subscName2 span{float:none}
+.social_share {
+    clear: both;
+    height: 24px;
+    margin-top: 10px;
+    width: 100%;
+}
+.social_share span{float:left}

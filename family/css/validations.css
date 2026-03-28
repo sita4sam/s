@@ -1,0 +1,9 @@
+
+.form {  }
+	.form .input {  }
+	.form .textarea {  }
+	.form .error-input, .form .error-both .input, .form .error-same .input { color:#123411 !important; border:1px solid #c04861 !important; }
+	.form .error-div { float:left; margin:29px 0 0 20px; color:#dadada; font-size:12px; text-decoration:underline; }
+	.form .error-div.sendfrindError { margin:15px 10px 0 !important; }
+	.form .error-div-alternative { display:none; width:800px; top:0; left:50%; position:absolute; z-index:1000; margin-left:-400px; text-align:center; font-size:16px; color:#934; padding:20px 0 20px 0; background-color:#fee; border:solid 2px #d36; border-top-width:0; }
+	.form .error-same, .form .error-both { color:#fff; background-color:#b66; }

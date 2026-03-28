@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Personal Page of Evan Mendelsohn | Contact</title>
+<link rel="shortcut icon" href="./images/favicon.ico" type="image/x-icon" />
+<meta name="description" content="Got something to say?  Shoot me a message and I will get back to you as soon as possible." />
+<meta name="keywords" content="Evan Mendelsohn" />
+<link href="./style.css" rel="stylesheet" type="text/css" media="screen" />
+
+<link href="./style/style.css" rel="stylesheet" type="text/css" />
+<style>
+.contentOuter{
+	height:989px;
+}
+#errors {
+    float: right;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 14px;
+    margin: 5px 10px 5px 5px;
+    padding: 5px;
+    width: 210px;
+}
+</style>
+
+<!--[if IE]>
+<style type="text/css">
+.menu a{
+font-family:arial;
+color:#866b63;
+}
+</style>
+<![endif]-->
+<script type="text/javascript" src="../w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "ur-844a5855-c046-a7dc-8260-c4c32d96f7a3", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+
+<script type="text/javascript" src="./prototype.js"></script>
+	<script type="text/javascript">
+
+	function sendRequest() {
+
+		new Ajax.Request("./email_form_process.php.html", {
+			   method: 'post',
+			   postBody: "name="+$F("name")+"&email="+$F("email")+"&message="+$F("message"),
+			   onComplete: showResponse
+
+		});
+	}
+
+
+	function showResponse(req)
+	{
+	   $('errors').style.borderStyle= "solid";
+	   
+	   var res=/message was received/;
+	  
+	   if(req.responseText.match(res))
+	   {
+		$('errors').style.borderColor= "red";
+		$('errors').style.color="red";
+	   }else{
+		$('errors').style.borderColor= "red";
+		$('errors').style.color="red";
+	   }
+	   
+	   $('errors').style.borderSize= "1px";
+	   $('errors').innerHTML=  req.responseText;
+	}
+</script>
+
+<body>
+
+<div class="wraper">
+<div class="social_share"><span class='st_fblike_hcount' displaytext='Facebook Like'></span>
+<span class='st_googleplus_hcount' displaytext='Google +'></span>
+<span class='st_facebook_hcount' displaytext='Facebook'></span>
+<span class='st_pinterest_hcount' displaytext='Pinterest'></span>
+<span class='st_twitter_hcount' displaytext='Tweet'></span></div>
+	<!-- ========= Header ========== -->
+    <div class="header">
+    	<!-- ========= Logo ========== -->
+    	<div class="logo">
+        	<a href="./index.html"><img src="./images/logo.png" alt="Evan Mendelsohn" /></a>
+        </div>
+        <!-- ========= /Logo ========== -->
+        <div class="menu right">
+        	<a href="./index.html">Projects</a> 
+			<a href="./about.html">About</a>
+			<a href="./contact.html" class="selected">Contact</a>
+        </div>
+        <div class="clearFix"></div>
+    </div>
+    <!-- ========= /Header ========== -->
+    <!-- ========= Content Outer ========== -->
+    <div class="contentOuter">
+    <!-- ========= Content Area ========== -->
+    <div class="content">
+    	<div class="heading headingContact">
+        	Contact
+        </div>
+        <!-- ========= Address ========== -->
+        <div class="address left">
+        	<form class="left" id="test" method="post" onsubmit="return false;" />
+		<table width="50%" border="0" align="center">
+		
+			   
+			   <tr>
+				  
+				   <td>
+				   
+				   
+						<input value="Name" type="text" name="name" id="name" size="38" maxlength="20" onfocus="(this.value == 'Name') && (this.value = '')" onblur="(this.value == '') && (this.value = 'Name')" />
+				   </td>
+			   </tr>
+
+			   <tr>
+				   
+				   <td>
+						<input value="Email Address" type="text" name="email" id="email" size="38" maxlength="35" onfocus="(this.value == 'Email Address') && (this.value = '')" onblur="(this.value == '') && (this.value = 'Email Address')" />
+				   </td>
+			   </tr>
+<tr>
+				 
+      <td>
+        <input value="Subject" name="subject" type="text" id="subject" size="38" onfocus="(this.value == 'Subject') && (this.value = '')" onblur="(this.value == '') && (this.value = 'Subject')" />
+      </td>
+	      </tr>
+			   <tr>
+				   <td colspan="2">
+						<textarea name="message" id="message" cols="40" rows="10" onfocus="(this.value == 'Message') && (this.value = '')" onblur="(this.value == '') && (this.value = 'Message')"></textarea>Message
+				   </td>
+			   </tr>
+			   <tr>
+				   <td colspan="2" align="left">
+						<input class="button" type="submit" value="" onclick="javascript: sendRequest();" />
+				   </td>
+			   </tr>
+			   <tr>
+				   <td colspan="2"> 
+				   
+				   </td>
+			   </tr>
+
+		</table>
+	   </form>
+            <div class="left emailAdd">
+            	Evan Mendelsohn
+                San Diego, CA
+                <span><a href="mailto:evan.mendelsohn@gmail.com">evan.mendelsohn<br />@gmail.com</a></span>
+            </div>
+             <div id="errors"> </div>
+        </div>
+        <div class="addPicture">
+        	<img src="./images/img-san-diego.png" alt="" />
+        </div>
+        <div class="clearFix"></div>
+        
+        <!-- ========= /Address ========== -->
+    </div>
+    <!-- ========= /Content Area ========== -->
+    </div>
+    <!-- ========= /Content Outer ========== -->
+    <!-- ========= Bottom ========== -->
+    <div class="bottom">
+    	 <!-- ========= Social Media ========== -->
+         <div class="socialMedia">
+         <a target="_blank" href="https://www.facebook.com/evanmendelsohn"><img src="./images/icon-fb.png" alt="" /></a> <!--<a href="#"><img src="images/icon-twitter.png" alt="" /></a>--><a target="_blank" href="http://www.linkedin.com/pub/evan-mendelsohn/2a/398/b3b"><img src="./images/linedin.png" alt="" /></a> 
+         </div>
+         <!-- ========= /Social Media ========== -->
+    </div>
+    <!-- ========= /Bottom ========== -->
+    <!-- ========= Copyright ========== -->
+  <div class="copyright">
+    	Copyright Mendel Ventures LLC 2014. All Rights Reserved.<br />
+  </div>
+    <!-- ========= /Copyright ========== -->
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','../www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41278556-1', 'evanmendelsohn.com');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
