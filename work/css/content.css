@@ -1617,7 +1617,7 @@
 }
 
 .about_content.skill_introduction .animal_box .item .text_box p:after {
-    content: 'â–¼';
+    content: '▼';
     display: inline-block;
     position: absolute;
     top: 29px;
