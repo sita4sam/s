@@ -159,7 +159,7 @@
 
     .brand-mark span {
       position: relative;
-      font-size: 1.5rem;
+      font-size: 0.9rem;
       font-weight: 900;
       letter-spacing: .08em;
     }
@@ -889,34 +889,10 @@
 <body>
   <div class="grid-overlay" aria-hidden="true"></div>
 
-
-  
-<div class="LOGO legacy-logo">
-  <a href="./index.html" aria-label="Go to home"></a>
-</div>
-
-<div class="MENU_btn">
-  <div
-    id="MENU_trigger"
-    class="button"
-    role="button"
-    aria-label="Open navigation menu"
-    aria-controls="legacyOverlayNav"
-    aria-expanded="false"
-  >
-    <input id="NAV_input" type="checkbox" />
-    <span class="top"></span>
-    <span class="middle"></span>
-    <span class="bottom"></span>
-  </div>
-</div>
-
-
-
   <header class="topbar">
     <div class="container topbar-inner">
       <a class="brand" href="#top" aria-label="SAMS Framework home">
-        <div class="brand-mark"><span>S</span></div>
+        <div class="brand-mark"><span>SAMS</span></div>
         <div>
           <div style="font-size:1rem;">Insurance Growth Framework</div>
           <div style="font-size:.78rem;color:var(--muted);font-weight:600;">
@@ -983,9 +959,8 @@
 
         <aside class="glass hero-side reveal">
           <div class="mini-panel spotlight">
-            <h2>LEAN AGILE VALUE TRANSFORMATION </h2>
-            <h3>Framework pillars Ver: 14.6</h3>
-            <small>Interactive Modern Visual designed for C-Suite eyes only<br></small>
+            <h3>Framework pillars</h3>
+            <small>Interactive Modern Visual</small>
             <div class="pillar-orbit" id="heroPillars"></div>
           </div>
 
@@ -1025,7 +1000,7 @@
           <div>
             <h2>Framework architecture</h2>
             <p>
-              Sam's framework into four strategic pillars:
+              The experience below organizes the SAMS framework into four strategic pillars:
               Value Chain, Target Operating Model, Tech & Foundation, and Risk & Change.
             </p>
           </div>
@@ -1079,7 +1054,6 @@
             </strong>
             <span>
              <br>
-             
         <font color ="#a3b4d7">  1. Accelerate profitable insurance growth by aligning market distribution, customer lifecycle, portfolio strategy, underwriting, and financial performance into one value-led engine. <br><br>
 
              2. Turn growth ambition into enterprise execution by connecting business model design, governance discipline, underwriting rigor, and performance management in a scalable target operating model.  <br><br>
@@ -1126,9 +1100,9 @@
 
 
 
-<div class="NAV_mask overlay-hugeinc" id="legacyOverlay">
-  <nav id="legacyOverlayNav">
 
+        <div class="NAV_mask overlay-hugeinc">
+            <nav>
                 <ul>
                     <li>
                         <a href="./index.html">
@@ -1543,68 +1517,6 @@
     setupReveal();
     setupSpotlight();
   </script>
-
-
-
-<script>
-  (function () {
-    const overlay = document.getElementById("legacyOverlay");
-    const trigger = document.getElementById("MENU_trigger");
-    const navInput = document.getElementById("NAV_input");
-    const menuBtn = document.querySelector(".MENU_btn");
-    const overlayNav = document.getElementById("legacyOverlayNav");
-
-    if (!overlay || !trigger || !navInput || !menuBtn || !overlayNav) return;
-
-    function openMenu() {
-      overlay.classList.add("open");
-      overlay.classList.remove("close");
-      document.body.classList.add("fixed");
-      navInput.checked = true;
-      menuBtn.classList.add("open");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function closeMenu() {
-      overlay.classList.remove("open");
-      overlay.classList.add("close");
-      document.body.classList.remove("fixed");
-      navInput.checked = false;
-      menuBtn.classList.remove("open");
-      trigger.setAttribute("aria-expanded", "false");
-
-      window.setTimeout(() => {
-        overlay.classList.remove("close");
-      }, 500);
-    }
-
-    navInput.addEventListener("change", function () {
-      if (navInput.checked) {
-        openMenu();
-      } else {
-        closeMenu();
-      }
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") {
-        closeMenu();
-      }
-    });
-
-    overlay.addEventListener("pointerdown", function (e) {
-      if (e.target === overlay) {
-        closeMenu();
-      }
-    });
-
-    overlay.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", function () {
-        closeMenu();
-      });
-    });
-  })();
-</script>
 
 
 </body>
