@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Allianz AI &amp; Data Transformation Blueprint</title>
+  <meta
+    name="description"
+    content="Executive-level framework for the Head of AI and Data Transformation at Allianz"
+  />
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0c1830;
+      --surface: rgba(255,255,255,.08);
+      --surface-strong: rgba(255,255,255,.12);
+      --surface-border: rgba(255,255,255,.14);
+      --text: #ecf4ff;
+      --muted: #9bb2cf;
+      --primary: #5db3ff;
+      --primary-2: #8e7cff;
+      --accent: #3ef0c7;
+      --warning: #ffb86b;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .35);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --max: 1280px;
+      --grid-gap: 18px;
+      --blur: 16px;
+      --card-pad: 1.1rem;
+      --transition: 220ms cubic-bezier(.2, .8, .2, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: dark;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        Segoe UI,
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 15%, rgba(93,179,255,.24), transparent 0 28%),
+        radial-gradient(circle at 82% 18%, rgba(142,124,255,.18), transparent 0 24%),
+        radial-gradient(circle at 50% 70%, rgba(62,240,199,.12), transparent 0 28%),
+        linear-gradient(180deg, #06101d 0%, #091223 30%, #060d18 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 34rem;
+      height: 34rem;
+      border-radius: 999px;
+      filter: blur(70px);
+      opacity: .18;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -8rem;
+      left: -8rem;
+      background: #4ca5ff;
+    }
+
+    body::after {
+      right: -10rem;
+      top: 25%;
+      background: #8e7cff;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,.9), transparent 85%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--max));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(6,14,26,.85), rgba(6,14,26,.45));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 74px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .9rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(135deg, rgba(93,179,255,.22), rgba(142,124,255,.18)),
+        rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: conic-gradient(from 220deg, var(--primary), var(--primary-2), var(--accent), var(--primary));
+      opacity: .35;
+      filter: blur(16px);
+    }
+
+    .brand-mark span {
+      position: relative;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: .55rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .95rem;
+      padding: .7rem .9rem;
+      border-radius: 999px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.07);
+    }
+
+    .hero {
+      position: relative;
+      padding: 5.5rem 0 2.4rem;
+    }
+
+    .hero-wrap {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 1.3rem;
+      align-items: stretch;
+    }
+
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      backdrop-filter: blur(var(--blur));
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(140deg, rgba(255,255,255,.16), transparent 22%, transparent 72%, rgba(255,255,255,.07));
+      pointer-events: none;
+    }
+
+    .hero-main {
+      padding: clamp(1.5rem, 2vw, 2rem);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      isolation: isolate;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      color: #d4e5ff;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 999px;
+      padding: .5rem .75rem;
+      width: fit-content;
+      font-size: .88rem;
+      letter-spacing: .02em;
+    }
+
+    .eyebrow-dot {
+      width: .55rem;
+      height: .55rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      box-shadow: 0 0 0 5px rgba(62,240,199,.12);
+    }
+
+    h1 {
+      margin: 1rem 0 .75rem;
+      font-size: clamp(2.2rem, 5.5vw, 5rem);
+      line-height: .96;
+      letter-spacing: -.04em;
+      max-width: 12ch;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #ffffff 10%, #b8d8ff 38%, #9cc8ff 52%, #c1bbff 84%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .hero p {
+      max-width: 66ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.2vw, 1.08rem);
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .9rem;
+      margin-top: 1.4rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: .98rem;
+      border-radius: 999px;
+      padding: .95rem 1.15rem;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), color var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      will-change: transform;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      color: #05111f;
+      background: linear-gradient(135deg, #8ad3ff 0%, #65b7ff 45%, #8f80ff 100%);
+      box-shadow: 0 12px 32px rgba(93,179,255,.28);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .85rem;
+      margin-top: 1.4rem;
+    }
+
+    .stat {
+      padding: .95rem 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      min-height: 98px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: clamp(1.25rem, 2vw, 1.55rem);
+      margin-bottom: .25rem;
+      letter-spacing: -.03em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+
+    .hero-side {
+      padding: 1rem;
+      display: grid;
+      gap: 1rem;
+      min-height: 500px;
+    }
+
+    .mini-panel {
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mini-panel h3 {
+      margin: 0 0 .8rem;
+      font-size: 1rem;
+      letter-spacing: .01em;
+    }
+
+    .mini-panel small {
+      color: var(--muted);
+    }
+
+    .pillar-orbit {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: .85rem;
+    }
+
+    .orbit-card {
+      min-height: 120px;
+      border-radius: 18px;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.11);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .orbit-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,.18);
+      background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.06));
+    }
+
+    .orbit-card .tag {
+      font-size: .76rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .orbit-card strong {
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+
+.signal-bars {
+  display: flex;
+  align-items: end;
+  gap: 1.5rem;
+  min-height: 180px;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.8rem;
+}
+
+.signal-bar-item {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.signal-bar-item::before {
+  content: attr(data-value);
+  position: absolute;
+  bottom: calc(var(--h) + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #dce9ff;
+  white-space: nowrap;
+  animation: pulseLabel 3.4s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+.signal-bar-item::after {
+  content: attr(data-year);
+  position: absolute;
+  bottom: -1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.signal-bar-item span {
+  width: 100%;
+  height: var(--h);
+  border-radius: 999px 999px 12px 12px;
+  background: linear-gradient(180deg, rgba(93,179,255,.95), rgba(142,124,255,.85));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22);
+  opacity: .9;
+  transform-origin: bottom;
+  animation: pulseHeight 3.4s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+
+@keyframes pulseHeight {
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: .85;
+  }
+  50% {
+    transform: scaleY(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseLabel {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: .9;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseHeight {
+  0%, 100% {
+    transform: scaleY(1);
+    opacity: .85;
+  }
+  50% {
+    transform: scaleY(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseLabel {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: .9;
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+    opacity: 1;
+  }
+}
+
+    @keyframes pulseHeight {
+      0%, 100% { transform: scaleY(1); opacity: .85; }
+      50% { transform: scaleY(1.08); opacity: 1; }
+    }
+
+    section {
+      padding: 1.2rem 0 1.4rem;
+    }
+
+    .section-head {
+      display: flex;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 1rem;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 2.4vw, 2.4rem);
+      letter-spacing: -.03em;
+    }
+
+    .section-head p {
+      margin: .45rem 0 0;
+      color: var(--muted);
+      max-width: 68ch;
+      line-height: 1.7;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--grid-gap);
+    }
+
+    .pillar {
+      position: relative;
+      padding: 1rem;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.05)),
+        rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+      min-height: 300px;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .pillar:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 26px 60px rgba(0,0,0,.35);
+    }
+
+    .pillar::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -30% auto;
+      width: 10rem;
+      height: 10rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(93,179,255,.28), transparent 65%);
+      pointer-events: none;
+      filter: blur(10px);
+    }
+
+    .pillar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .8rem;
+      margin-bottom: .9rem;
+    }
+
+    .pillar-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      font-weight: 800;
+    }
+
+    .pillar h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .pillar ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      gap: .7rem;
+    }
+
+    .pillar li {
+      display: flex;
+      align-items: start;
+      gap: .65rem;
+      color: #e8f1ff;
+      line-height: 1.45;
+      font-size: .95rem;
+    }
+
+    .pillar li::before {
+      content: "";
+      width: .55rem;
+      height: .55rem;
+      border-radius: 999px;
+      margin-top: .46rem;
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      box-shadow: 0 0 0 5px rgba(62,240,199,.10);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .7rem;
+      margin: .6rem 0 1rem;
+    }
+
+    .chip {
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      padding: .7rem .95rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: .01em;
+      transition: var(--transition);
+    }
+
+    .chip:hover,
+    .chip.active {
+      background: linear-gradient(135deg, rgba(93,179,255,.18), rgba(142,124,255,.16));
+      border-color: rgba(255,255,255,.20);
+      transform: translateY(-2px);
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--grid-gap);
+    }
+
+    .capability-card {
+      position: relative;
+      border-radius: 22px;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border: 1px solid rgba(255,255,255,.11);
+      min-height: 210px;
+      overflow: hidden;
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .capability-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,.19);
+    }
+
+    .capability-card::before {
+      content: "";
+      position: absolute;
+      inset: -25% auto auto -18%;
+      width: 9rem;
+      height: 9rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at center, rgba(62,240,199,.18), transparent 72%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .capability-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: .75rem;
+      margin-bottom: .75rem;
+    }
+
+    .capability-top h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+    }
+
+    .capability-type {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--muted);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      padding: .45rem .6rem;
+      white-space: nowrap;
+    }
+
+    .capability-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: .95rem;
+    }
+
+    .capability-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 1rem;
+    }
+
+    .capability-tags span {
+      font-size: .8rem;
+      color: #d9ebff;
+      padding: .45rem .6rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.09);
+    }
+
+    .drivers-panel {
+      padding: 1.1rem;
+    }
+
+    .driver-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: .8rem;
+    }
+
+    .driver-pill {
+      padding: .95rem .85rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .6rem;
+      font-weight: 700;
+      min-height: 76px;
+      transition: var(--transition);
+    }
+
+    .driver-pill:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .driver-pill .mini {
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .driver-pill strong {
+      display: block;
+      line-height: 1.2;
+      font-size: .98rem;
+    }
+
+    .driver-dot {
+      width: .7rem;
+      height: .7rem;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--warning), var(--primary-2));
+      box-shadow: 0 0 0 6px rgba(255,184,107,.11);
+    }
+
+    .footer {
+      padding: 2.2rem 0 3rem;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .footer-card {
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .spotlight {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spotlight::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          460px circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255,255,255,.14),
+          transparent 35%
+        );
+      opacity: 0;
+      transition: opacity var(--transition);
+      pointer-events: none;
+    }
+
+    .spotlight:hover::after {
+      opacity: 1;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-wrap,
+      .framework-grid,
+      .capability-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .driver-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        padding: .5rem 0;
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .hero {
+        padding-top: 4rem;
+      }
+
+      .hero-wrap,
+      .framework-grid,
+      .capability-grid,
+      .driver-grid,
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        justify-content: start;
+      }
+
+      .hero-main,
+      .hero-side,
+      .pillar,
+      .capability-card {
+        min-height: auto;
+      }
+
+      h1 {
+        max-width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        scroll-behavior: auto !important;
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <div class="LOGO legacy-logo">
+    <a href="./index.html" aria-label="Go to home"></a>
+  </div>
+
+  <div class="MENU_btn">
+    <div
+      id="MENU_trigger"
+      class="button"
+      role="button"
+      aria-label="Open navigation menu"
+      aria-controls="legacyOverlayNav"
+      aria-expanded="false"
+    >
+      <input id="NAV_input" type="checkbox" />
+      <span class="top"></span>
+      <span class="middle"></span>
+      <span class="bottom"></span>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="Allianz AI and Data Transformation home">
+        <div class="brand-mark"><span>S</span></div>
+        <div>
+          <div style="font-size:1rem;">Allianz AI &amp; Data Transformation Blueprint</div>
+          <div style="font-size:.78rem;color:var(--muted);font-weight:600;">
+            Role: Head of AI &amp; Data Transformation | Americas hub | Global  scope
+          </div>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#framework">Mandate</a>
+        <a href="#capabilities">Roadmap</a>
+        <a href="#drivers">Governance</a>
+        <a href="#about">Use Cases</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-wrap">
+        <article class="glass hero-main spotlight reveal">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+             Designed with ATA in mind to align with Allianz SE, AzC, Life,  Health, Europe , NA, Growth, Anglo, &  AGCS Markets +  Allianz Technology Group Leaders’ vision/Priorities.
+            </div>
+
+            <h1>
+             Sam's  
+              <span class="hero-gradient">ATA AI &amp; Data Transformation</span>
+                Blueprint
+            </h1>
+
+            <p>
+              An executive-level transformation framework for my role as Allianz America  Head of AI and Data Transformation ,
+              based in the Americas and supporting Allianz operating entities globally. This blueprint
+              covers AI strategy, data modernization, AI Transformation aligned to OE's operating model, responsible AI governance,
+              platform evolution, and measurable value realization across underwriting, claims, policy
+              administration, Finance, distribution, customer Support, Business distribution, Broker/agency intergration, and other key enterprise functions.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#framework">
+                Explore framework
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="btn btn-secondary" href="#about">
+                View 15 use cases
+              </a>
+            </div>
+          </div>
+
+                <div class="mini-panel spotlight">
+            <h3>Transformation horizon signal with ROI / Benefits Realization</h3>
+            <small>From mandate and governance to scaled enterprise value realization</small>
+
+            <div class="signal-bars" aria-hidden="true">
+              <div class="signal-bar-item" style="--h:58%; --d:.1s;" data-value="Assess" data-year="0-30d">
+                <span></span>
+              </div>
+              <div class="signal-bar-item" style="--h:66%; --d:.2s;" data-value="Govern" data-year="30-60d">
+                <span></span>
+              </div>
+              <div class="signal-bar-item" style="--h:74%; --d:.35s;" data-value="Prioritize" data-year="60-90d">
+                <span></span>
+              </div>
+              <div class="signal-bar-item" style="--h:82%; --d:.5s;" data-value="Pilot" data-year="90-180d">
+                <span></span>
+              </div>
+              <div class="signal-bar-item" style="--h:90%; --d:.65s;" data-value="Scale" data-year="6-12m">
+                <span></span>
+              </div>
+              <div class="signal-bar-item" style="--h:96%; --d:.8s;" data-value="Realize" data-year="12m+">
+                <span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>4</strong>
+              <span>Core pillars: mandate, platform modernization, global delivery model, and value-led governance.</span>
+            </div>
+            <div class="stat">
+              <strong>3</strong>
+              <span>Execution horizons: first 90 days, first 180 days, and first 12 months with clear outcomes.</span>
+            </div>
+            <div class="stat">
+              <strong>15</strong>
+              <span>Priority AI and data use cases across Life, P&amp;C, and Health used by large insurance carriers.</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="glass hero-side reveal">
+          <div class="mini-panel spotlight">
+            <h2>ROLE MANDATE</h2>
+            <h3>Global AI &amp; Data Transformation framework</h3>
+            <small>Designed for CIO, CDAO, COO, CEO, Allianz Technology, and OE leadership<br></small>
+            <div class="pillar-orbit">
+              <div class="orbit-card">
+                <span class="tag">MD</span>
+                <strong>Executive mandate &amp; role charter</strong>
+              </div>
+              <div class="orbit-card">
+                <span class="tag">OM</span>
+                <strong>Federated global operating model</strong>
+              </div>
+              <div class="orbit-card">
+                <span class="tag">PF</span>
+                <strong>AI, data, platform and MLOps foundations</strong>
+              </div>
+              <div class="orbit-card">
+                <span class="tag">VR</span>
+                <strong>Governance, value realization, and responsible AI</strong>
+              </div>
+            </div>
+          </div>
+
+    <div class="mini-panel spotlight">
+  <h3>AI &amp; Data Transformation Control Tower</h3>
+  <small>North-star outcomes, transformation layers, and 90 / 180 / 365-day execution in one executive view</small>
+
+  <div style="display:grid; gap:.85rem; margin-top:1rem;">
+
+    <!-- North Star Outcomes -->
+    <div style="
+      border-radius:18px;
+      padding:.85rem;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.10);
+    ">
+      <div style="font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:.55rem;">
+        North Star Outcomes
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:.45rem;">
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(93,179,255,.12); border:1px solid rgba(93,179,255,.25); font-size:.78rem;">Growth</span>
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(62,240,199,.10); border:1px solid rgba(62,240,199,.22); font-size:.78rem;">Claims Efficiency</span>
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(142,124,255,.12); border:1px solid rgba(142,124,255,.24); font-size:.78rem;">Loss Ratio</span>
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(255,184,107,.10); border:1px solid rgba(255,184,107,.20); font-size:.78rem;">CX / EX</span>
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); font-size:.78rem;">Productivity</span>
+        <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); font-size:.78rem;">Compliance</span>
+      </div>
+    </div>
+
+    <!-- Transformation Lanes -->
+    <div style="display:grid; gap:.55rem;">
+
+      <!-- Lane 1 -->
+      <div style="
+        display:grid;
+        grid-template-columns: 118px 1fr;
+        gap:.65rem;
+        align-items:start;
+        border-radius:16px;
+        padding:.75rem;
+        background:rgba(255,255,255,.05);
+        border:1px solid rgba(255,255,255,.09);
+      ">
+        <div style="
+          font-size:.75rem;
+          color:var(--muted);
+          text-transform:uppercase;
+          letter-spacing:.08em;
+          padding-top:.15rem;
+        ">
+          Value Streams
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:.4rem;">
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Underwriting</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Claims</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Policy Admin</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Distribution</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Customer Ops</span>
+        </div>
+      </div>
+
+      <!-- Lane 2 -->
+      <div style="
+        display:grid;
+        grid-template-columns: 118px 1fr;
+        gap:.65rem;
+        align-items:start;
+        border-radius:16px;
+        padding:.75rem;
+        background:rgba(255,255,255,.05);
+        border:1px solid rgba(255,255,255,.09);
+      ">
+        <div style="
+          font-size:.75rem;
+          color:var(--muted);
+          text-transform:uppercase;
+          letter-spacing:.08em;
+          padding-top:.15rem;
+        ">
+          AI Use Cases
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:.45rem;">
+          <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(93,179,255,.14); border:1px solid rgba(93,179,255,.26); font-size:.76rem;">Fraud Detection</span>
+          <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(62,240,199,.12); border:1px solid rgba(62,240,199,.24); font-size:.76rem;">Claims Triage</span>
+          <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(142,124,255,.14); border:1px solid rgba(142,124,255,.26); font-size:.76rem;">Pricing AI</span>
+          <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(255,184,107,.12); border:1px solid rgba(255,184,107,.24); font-size:.76rem;">Agent Copilot</span>
+          <span style="padding:.42rem .62rem; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); font-size:.76rem;">Document AI</span>
+        </div>
+      </div>
+
+      <!-- Lane 3 -->
+      <div style="
+        display:grid;
+        grid-template-columns: 118px 1fr;
+        gap:.65rem;
+        align-items:start;
+        border-radius:16px;
+        padding:.75rem;
+        background:rgba(255,255,255,.05);
+        border:1px solid rgba(255,255,255,.09);
+      ">
+        <div style="
+          font-size:.75rem;
+          color:var(--muted);
+          text-transform:uppercase;
+          letter-spacing:.08em;
+          padding-top:.15rem;
+        ">
+          Data &amp; Platform
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:.4rem;">
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Data Products</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Governance</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">MLOps</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">GenAIOps</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Cloud Platform</span>
+        </div>
+      </div>
+
+      <!-- Lane 4 -->
+      <div style="
+        display:grid;
+        grid-template-columns: 118px 1fr;
+        gap:.65rem;
+        align-items:start;
+        border-radius:16px;
+        padding:.75rem;
+        background:rgba(255,255,255,.05);
+        border:1px solid rgba(255,255,255,.09);
+      ">
+        <div style="
+          font-size:.75rem;
+          color:var(--muted);
+          text-transform:uppercase;
+          letter-spacing:.08em;
+          padding-top:.15rem;
+        ">
+          Governance
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:.4rem;">
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">AI Council</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Data Council</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Architecture</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">FinOps</span>
+          <span style="padding:.38rem .58rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); font-size:.76rem;">Value Dashboard</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div style="
+      border-radius:18px;
+      padding:.9rem;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.10);
+    ">
+      <div style="font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:.65rem;">
+        Transformation Roadmap
+      </div>
+
+      <div style="
+        display:grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap:.6rem;
+      ">
+        <div style="
+          border-radius:14px;
+          padding:.75rem;
+          background:rgba(93,179,255,.10);
+          border:1px solid rgba(93,179,255,.22);
+        ">
+          <div style="font-size:.72rem; color:#d7e9ff; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem;">0–90 Days</div>
+          <div style="font-weight:700; font-size:.9rem; margin-bottom:.3rem;">Assess &amp; Govern</div>
+          <div style="font-size:.78rem; color:var(--muted); line-height:1.5;">
+            mandate, maturity, priorities, councils
+          </div>
+        </div>
+
+        <div style="
+          border-radius:14px;
+          padding:.75rem;
+          background:rgba(142,124,255,.10);
+          border:1px solid rgba(142,124,255,.22);
+        ">
+          <div style="font-size:.72rem; color:#e3dcff; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem;">90–180 Days</div>
+          <div style="font-weight:700; font-size:.9rem; margin-bottom:.3rem;">Pilot &amp; Build</div>
+          <div style="font-size:.78rem; color:var(--muted); line-height:1.5;">
+            pilots, platform, data products, OE waves
+          </div>
+        </div>
+
+        <div style="
+          border-radius:14px;
+          padding:.75rem;
+          background:rgba(62,240,199,.10);
+          border:1px solid rgba(62,240,199,.20);
+        ">
+          <div style="font-size:.72rem; color:#d8fff5; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem;">180–365 Days</div>
+          <div style="font-weight:700; font-size:.9rem; margin-bottom:.3rem;">Scale &amp; Realize</div>
+          <div style="font-size:.78rem; color:var(--muted); line-height:1.5;">
+            adoption, KPI control tower, enterprise value
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="framework">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Role charter / executive mandate</h2>
+            <p>
+              The Head of AI and Data Transformation serves as the enterprise leader accountable for shaping
+              Allianz’s AI and data agenda across global operating entities, aligning business priorities with
+              Allianz Technology execution, and ensuring transformation delivers measurable value with strong
+              governance, responsible AI controls, and scalable operating discipline.
+            </p>
+          </div>
+        </div>
+
+        <div class="framework-grid">
+          <article class="pillar reveal spotlight">
+            <div class="pillar-head">
+              <div style="display:flex;align-items:center;gap:.8rem;">
+                <div class="pillar-badge">01</div>
+                <div>
+                  <h3>Enterprise AI &amp; Data Strategy</h3>
+                  <div style="color:var(--muted);font-size:.86rem;">Mission and leadership mandate</div>
+                </div>
+              </div>
+            </div>
+            <div style="color:var(--muted);line-height:1.7;font-size:.95rem;">
+              Set one enterprise vision for AI and data transformation that aligns Group priorities,
+              OE needs, and Allianz Technology delivery capabilities.
+            </div>
+            <ul>
+              <li>Define enterprise AI and data strategy and target outcomes</li>
+              <li>Translate strategy into business value across Life, P&amp;C, and Health</li>
+              <li>Act as executive advisor to business and technology leadership</li>
+              <li>Lead buy / build / partner choices for strategic capabilities</li>
+            </ul>
+          </article>
+
+          <article class="pillar reveal spotlight">
+            <div class="pillar-head">
+              <div style="display:flex;align-items:center;gap:.8rem;">
+                <div class="pillar-badge">02</div>
+                <div>
+                  <h3>Allianz Group, AzT , OE's Alignment</h3>
+                  <div style="color:var(--muted);font-size:.86rem;">Federated enterprise Ops model</div>
+                </div>
+              </div>
+            </div>
+            <div style="color:var(--muted);line-height:1.7;font-size:.95rem;">
+              Create a support model that balances enterprise standards and reusable platforms with
+              local OE flexibility across markets, regulations, and maturity levels.
+            </div>
+            <ul>
+              <li>Establish central guardrails with federated OE execution</li>
+              <li>Stand up OE enablement waves based on value and readiness</li>
+              <li>Create reusable playbooks, reference architectures, and capability templates</li>
+              <li>Coordinate regionally while preserving country-specific regulatory needs</li>
+            </ul>
+          </article>
+
+          <article class="pillar reveal spotlight">
+            <div class="pillar-head">
+              <div style="display:flex;align-items:center;gap:.8rem;">
+                <div class="pillar-badge">03</div>
+                <div>
+                  <h3>Transformation &amp; Modernization</h3>
+                  <div style="color:var(--muted);font-size:.86rem;">Business and technology change</div>
+                </div>
+              </div>
+            </div>
+            <div style="color:var(--muted);line-height:1.7;font-size:.95rem;">
+              Accelerate transformation across underwriting, claims, policy administration, customer
+              operations, and data platform evolution using an outcome-led model.
+            </div>
+            <ul>
+              <li>Modernize data architecture, data products, and access patterns</li>
+              <li>Enable MLOps / GenAIOps and scalable AI product delivery</li>
+              <li>Drive policy administration and claims process modernization</li>
+              <li>Embed Lean Portfolio Management and value-stream-based prioritization</li>
+            </ul>
+          </article>
+
+          <article class="pillar reveal spotlight">
+            <div class="pillar-head">
+              <div style="display:flex;align-items:center;gap:.8rem;">
+                <div class="pillar-badge">04</div>
+                <div>
+                  <h3>Governance, Value &amp; Responsible AI</h3>
+                  <div style="color:var(--muted);font-size:.86rem;">Control, compliance, and outcomes</div>
+                </div>
+              </div>
+            </div>
+            <div style="color:var(--muted);line-height:1.7;font-size:.95rem;">
+              Govern transformation through data quality, privacy, AI controls, value realization,
+              benefits management, and executive transparency.
+            </div>
+            <ul>
+              <li>Stand up AI governance council and data governance council</li>
+              <li>Embed model lifecycle, privacy, fairness, and human oversight controls</li>
+              <li>Track benefits through KPI dashboards, flow metrics, and executive reporting</li>
+              <li>Apply FinOps and funding discipline across platforms, data, and AI services</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>90-day, 180-day, and 12-month roadmap</h2>
+            <p>
+              A pragmatic transformation sequence that starts with mandate clarity and governance,
+              moves into prioritized pilots and foundational platform decisions, and then scales
+              through OE adoption, reusable enterprise capabilities, and measurable value realization.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>First 90 Days</h3>
+              </div>
+              <span class="capability-type">Mobilize</span>
+            </div>
+            <p>
+              Confirm executive mandate, complete OE and capability maturity assessment, establish AI/data governance,
+              define target operating model principles, shortlist top enterprise use cases, and align a joint execution cadence
+              with Allianz Technology Near shore/offshore.<br><br>
+              <strong>Key actions:</strong> stakeholder map, current-state diagnostic, value-stream heatmap, use-case prioritization,
+              AI/data policy baseline, executive forums, RACI, and roadmap v1.<br><br>
+              <strong>KPIs:</strong> charter approved, councils launched, OE heatmap complete, priority portfolio agreed.
+            </p>
+            <div class="capability-tags">
+              <span>Mandate</span>
+              <span>Diagnostic</span>
+              <span>Governance</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>First 180 Days</h3>
+              </div>
+              <span class="capability-type">Build &amp; Pilot</span>
+            </div>
+            <p>
+              Launch 3–5 priority pilots, stand up minimum viable data products and shared AI platform patterns,
+              define reusable enterprise capabilities, and activate OE enablement waves across selected markets or functions.<br><br>
+              <strong>Key actions:</strong> reference architecture, MLOps/GenAIOps setup, pilot delivery, change network launch,
+              value register, architecture review flow, and funding discipline refinement.<br><br>
+              <strong>KPIs:</strong> pilots live, shared foundation components active, adoption baselines measured.
+            </p>
+            <div class="capability-tags">
+              <span>Pilots</span>
+              <span>Platform</span>
+              <span>Enablement</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>First 12 Months</h3>
+              </div>
+              <span class="capability-type">Scale</span>
+            </div>
+            <p>
+              Scale successful use cases to additional OEs, embed governance into BAU, strengthen portfolio steering,
+              mature reusable AI/data services, and deliver visible business outcomes across underwriting, claims, service,
+              pricing, and customer operations.<br><br>
+              <strong>Key actions:</strong> expand OE coverage, institutionalize councils, role-based training by country/function,
+              optimize cloud and AI spend, publish year-two roadmap.<br><br>
+              <strong>KPIs:</strong> scaled use cases, throughput gains, cycle time improvement, adoption rates, documented benefits.
+            </p>
+            <div class="capability-tags">
+              <span>Scale</span>
+              <span>Adoption</span>
+              <span>Value realization</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>Risk &amp; Mitigation Focus</h3>
+              </div>
+              <span class="capability-type">Control</span>
+            </div>
+            <p>
+              Key risks include fragmented OE priorities, over-centralization, duplicated local solutions, weak data quality,
+              uncontrolled GenAI experimentation, unclear decision rights, and low adoption of new tools and workflows.<br><br>
+              <strong>Mitigation actions:</strong> federated model, common standards, gated governance, reusable components,
+              role-based change management, KPI transparency, and value-based funding decisions.
+            </p>
+            <div class="capability-tags">
+              <span>Risk</span>
+              <span>Mitigation</span>
+              <span>Control tower</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>Allianz-Specific Transformation Priorities</h3>
+              </div>
+              <span class="capability-type">Focus areas</span>
+            </div>
+            <p>
+              Support model for global operating entities, central vs federated ownership, collaboration model with Allianz Technology,
+              reusable enterprise capabilities, cross-entity platform standardization, regulatory variation across countries,
+              and scaling across both mature and less mature OEs.
+            </p>
+            <div class="capability-tags">
+              <span>OE model</span>
+              <span>Technology partnership</span>
+              <span>Standardization</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top">
+              <div>
+                <h3>Core Transformation Pillars</h3>
+              </div>
+              <span class="capability-type">Coverage</span>
+            </div>
+            <p>
+              Enterprise AI strategy, data modernization, legacy/core modernization, policy administration modernization,
+              claims transformation, underwriting transformation, distribution enablement, customer and operations transformation,
+              benefits realization, Lean Portfolio Management, FinOps, change management, responsible AI governance,
+              and risk/compliance alignment.
+            </p>
+            <div class="capability-tags">
+              <span>AI strategy</span>
+              <span>Data modernization</span>
+              <span>LPM / FinOps</span>
+            </div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>Business Value Realization &amp; KPI Control Tower</h3>
+    </div>
+    <span class="capability-type">Value Realization</span>
+  </div>
+  <p>
+    Implement a value realization framework that links AI and data investments to measurable
+    business outcomes across growth, efficiency, customer experience, claims, underwriting,
+    fraud, and operational productivity. Track benefits using a control tower with flow metrics,
+    business KPIs, adoption measures, and FinOps transparency so leadership can continuously
+    reprioritize and scale the highest-value initiatives.<br><br>
+    <strong>Focus:</strong> benefits register, KPI dashboards, throughput, cycle time, adoption, and cost-to-value tracking.<br><br>
+    <strong>Outcome:</strong> visible business impact, stronger executive confidence, and better funding decisions for scale.
+  </p>
+  <div class="capability-tags">
+    <span>Benefits Realization</span>
+    <span>KPI Dashboard</span>
+    <span>FinOps</span>
+  </div>
+</article>
+<article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>Transformation Delivery Model &amp; OE Enablement</h3>
+    </div>
+    <span class="capability-type">Delivery Specific</span>
+  </div>
+  <p>
+    Create a delivery model that connects central transformation leadership, Allianz Technology,
+    and operating entities through a common execution rhythm. Evolve from project-centric delivery
+    to a transformation / value management model using Lean Portfolio Management, OE enablement waves,
+    product-centric teams, and cross-functional governance that supports both shared capabilities
+    and local market execution.<br><br>
+    <strong>Focus:</strong> TMO / VMO structure, delivery cadence, prioritization, dependency management, and OE rollout playbooks.<br><br>
+    <strong>Outcome:</strong> improved execution speed, stronger alignment, and scalable transformation adoption across regions.
+  </p>
+  <div class="capability-tags">
+    <span>TMO / VMO</span>
+    <span>Lean Portfolio Management</span>
+    <span>OE Enablement</span>
+  </div>
+</article>
+
+<article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>Data Platform, MLOps &amp; GenAIOps Foundations</h3>
+    </div>
+    <span class="capability-type">Data + AI</span>
+  </div>
+  <p>
+    Build the foundational platform capabilities required to industrialize AI and data delivery
+    across Allianz. This includes enterprise data pipelines, governed access patterns, model
+    development environments, model registry, CI/CD, monitoring, retraining workflows,
+    prompt/application controls, and secure deployment patterns in close partnership with
+    Allianz Technology.<br><br>
+    <strong>Focus:</strong> platform standardization, reusable services, automation, observability, and deployment discipline.<br><br>
+    <strong>Outcome:</strong> faster pilot-to-production cycles, lower duplication, stronger resilience, and scalable AI operations.
+  </p>
+  <div class="capability-tags">
+    <span>Enterprise Data Platform</span>
+    <span>MLOps</span>
+    <span>GenAIOps</span>
+  </div>
+</article>
+
+
+<article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>Data Governance &amp; Data Product Model</h3>
+    </div>
+    <span class="capability-type">Data Specific</span>
+  </div>
+  <p>
+    Define a federated data governance model that treats data as a strategic asset and organizes
+    critical domains into reusable data products across customer, policy, claims, underwriting,
+    distribution, finance, and risk. Improve trust and reuse by embedding stewardship,
+    lineage, data quality, ownership, access controls, and common business semantics across
+    enterprise and OE-specific environments.<br><br>
+    <strong>Focus:</strong> data ownership, quality rules, metadata, lineage, stewardship, and domain accountability.<br><br>
+    <strong>Outcome:</strong> trusted, reusable, and scalable data foundations for AI, reporting, and operational decision-making.
+  </p>
+  <div class="capability-tags">
+    <span>Data Governance</span>
+    <span>Data Products</span>
+    <span>Data Quality</span>
+  </div>
+</article>
+
+<article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>Responsible AI &amp; Model Governance</h3>
+    </div>
+    <span class="capability-type">AI Specific</span>
+  </div>
+  <p>
+    Stand up a practical responsible AI framework covering model governance, fairness,
+    transparency, human oversight, explainability, auditability, and lifecycle controls.
+    Ensure AI and GenAI solutions used across Allianz operating entities are governed through
+    clear approval gates, model inventories, monitoring standards, and risk-based policies
+    aligned to insurance and data privacy expectations.<br><br>
+    <strong>Focus:</strong> AI governance council, model risk management, documentation, controls, and oversight.<br><br>
+    <strong>Outcome:</strong> trusted AI adoption at scale with lower regulatory, reputational, and operational risk.
+  </p>
+  <div class="capability-tags">
+    <span>Responsible AI</span>
+    <span>Model Risk</span>
+    <span>Governance</span>
+  </div>
+</article>
+
+<article class="capability-card reveal spotlight">
+  <div class="capability-top">
+    <div>
+      <h3>AI Strategy &amp; Use Case Factory</h3>
+    </div>
+    <span class="capability-type">AI Specific</span>
+  </div>
+  <p>
+    Establish an Allianz-wide AI strategy and use case factory to identify, assess, and prioritize
+    high-value opportunities across underwriting, claims, pricing, service, fraud, actuarial,
+    and distribution. Create a repeatable intake-to-scale model that evaluates business value,
+    feasibility, regulatory risk, data readiness, and reuse potential across operating entities.<br><br>
+    <strong>Focus:</strong> enterprise AI agenda, use case triage, prioritization model, pilot-to-scale discipline.<br><br>
+    <strong>Outcome:</strong> a governed pipeline of AI opportunities tied to value streams and business outcomes.
+  </p>
+  <div class="capability-tags">
+    <span>AI Strategy</span>
+    <span>Use Case Prioritization</span>
+    <span>Value Streams</span>
+  </div>
+</article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="drivers">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>Governance and delivery model</h2>
+            <p>
+              Governance should separate decision rights across strategy, architecture, data, model risk, funding,
+              and value realization while enabling faster execution across Allianz Technology and operating entities.
+            </p>
+          </div>
+        </div>
+
+        <div class="glass drivers-panel reveal spotlight">
+          <div class="driver-grid">
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Strategic direction</span>
+                <strong>Executive steering committee</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">AI policy, model controls</span>
+                <strong>AI governance council</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Quality, access, stewardship</span>
+                <strong>Data governance council</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Standards and reuse</span>
+                <strong>Architecture review board</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Flow, benefits, transparency</span>
+                <strong>TMO / VMO control tower</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Country and market adoption</span>
+                <strong>OE enablement forum</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Capacity-led investment</span>
+                <strong>Funding model</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Value, risk, feasibility</span>
+                <strong>Prioritization model</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Cloud and AI cost discipline</span>
+                <strong>FinOps</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+            <div class="driver-pill reveal spotlight">
+              <div>
+                <span class="mini">Adoption, value, risk metrics</span>
+                <strong>KPI dashboard structure</strong>
+              </div>
+              <span class="driver-dot" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <h2>15 high-value AI and data use cases for large insurance carriers</h2>
+            <p>
+              Priority use cases commonly used by large insurers across Life, P&amp;C, and Health, tailored for
+              an Allianz-style enterprise model with global scale, reusable capabilities, and measurable business outcomes.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability-grid">
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>1. Underwriting decision support</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Improves risk selection speed, consistency, and referral quality using submission data, third-party data, and ML scoring.</p>
+            <div class="capability-tags"><span>Underwriting</span><span>KPI: referral rate, quote time</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>2. Claims triage &amp; automation</h3></div><span class="capability-type">P&amp;C / Health</span></div>
+            <p>Routes claims intelligently, reduces manual effort, and speeds first notice to settlement using orchestration and document AI.</p>
+            <div class="capability-tags"><span>Claims</span><span>KPI: cycle time, touchless rate</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>3. Fraud detection</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Identifies suspicious patterns and leakage through anomaly detection, graph analytics, and suspicious behavior scoring.</p>
+            <div class="capability-tags"><span>SIU / Claims</span><span>KPI: leakage reduction</span><span>Complexity: High</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>4. Pricing optimization</h3></div><span class="capability-type">P&amp;C / Health / Life</span></div>
+            <p>Refines rate adequacy and portfolio profitability using actuarial data, market data, elasticity models, and optimization.</p>
+            <div class="capability-tags"><span>Pricing / Product</span><span>KPI: combined ratio</span><span>Complexity: High</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>5. Customer retention / persistency analytics</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Predicts churn or lapse and triggers proactive intervention using behavior, policy history, and engagement data.</p>
+            <div class="capability-tags"><span>Customer / Distribution</span><span>KPI: retention uplift</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>6. Agent productivity copilots</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Supports agents, brokers, service teams, and underwriters with next-best-actions, knowledge search, and summarization.</p>
+            <div class="capability-tags"><span>Distribution</span><span>KPI: time saved, adoption</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>7. Contact center AI</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Uses speech/text analytics and GenAI summaries to reduce handle time and improve service quality.</p>
+            <div class="capability-tags"><span>Service</span><span>KPI: AHT, FCR</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>8. Document intelligence</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Extracts data from forms, medical records, submissions, invoices, and correspondence using OCR/NLP.</p>
+            <div class="capability-tags"><span>Operations</span><span>KPI: extraction accuracy, STP</span><span>Complexity: Low</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>9. Risk scoring</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Improves segmentation and prioritization for underwriting, care management, servicing, and risk interventions.</p>
+            <div class="capability-tags"><span>Risk</span><span>KPI: segmentation accuracy</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>10. Loss prediction</h3></div><span class="capability-type">P&amp;C</span></div>
+            <p>Predicts severity, catastrophe impact, and resource needs using exposure, geospatial, weather, and loss data.</p>
+            <div class="capability-tags"><span>Cat / Claims</span><span>KPI: reserve accuracy</span><span>Complexity: High</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>11. Care management analytics</h3></div><span class="capability-type">Health / Life</span></div>
+            <p>Targets interventions and improves health outcomes while controlling avoidable cost through predictive care insights.</p>
+            <div class="capability-tags"><span>Health Operations</span><span>KPI: avoidable admissions</span><span>Complexity: High</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>12. Personalization / next best action</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Improves conversion, cross-sell, service relevance, and customer experience using customer 360 and recommendation models.</p>
+            <div class="capability-tags"><span>Marketing / Service</span><span>KPI: conversion uplift</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>13. Reserve / actuarial analytics</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Improves reserve insight, scenario analysis, and portfolio steering with predictive and stochastic analytics.</p>
+            <div class="capability-tags"><span>Actuarial / Finance</span><span>KPI: reserve accuracy</span><span>Complexity: High</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>14. Straight-through processing</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Automates low-complexity new business, servicing, and claims workflows using rules, orchestration, and exception handling.</p>
+            <div class="capability-tags"><span>Operations</span><span>KPI: STP rate</span><span>Complexity: Medium</span></div>
+          </article>
+
+          <article class="capability-card reveal spotlight">
+            <div class="capability-top"><div><h3>15. GenAI knowledge assistants</h3></div><span class="capability-type">Life / P&amp;C / Health</span></div>
+            <p>Provides grounded answers from policy, claims, product, compliance, and process knowledge with secure enterprise controls.</p>
+            <div class="capability-tags"><span>Knowledge / Compliance</span><span>KPI: search time reduction</span><span>Complexity: Low</span></div>
+          </article>
+        </div>
+
+        <div class="glass footer-card reveal" style="margin-top:1.1rem;">
+          <div>
+            <strong style="display:block;font-size:1rem;color:var(--text);margin-bottom:.35rem;">
+              <h2 style="margin:0;">Year-one enterprise outcomes expected from the role</h2>
+            </strong>
+            <span>
+              <br>
+              <font color="#a3b4d7">
+                1. One approved Allianz-wide AI and Data Transformation mandate with defined decision rights and a clear partnership model with Allianz Technology.<br><br>
+                2. A federated operating model that combines central standards and reusable capabilities with local OE execution flexibility.<br><br>
+                3. A prioritized portfolio of high-value AI and data use cases linked to underwriting, claims, policy administration, customer service, pricing, and corporate value streams.<br><br>
+                4. Minimum viable enterprise governance for AI, data, privacy, architecture, risk, and model lifecycle management.<br><br>
+                5. Shared platform patterns for data products, MLOps / GenAIOps, document intelligence, copilots, and enterprise knowledge services.<br><br>
+                6. Quantified benefits in cycle time, productivity, leakage reduction, straight-through processing, and customer or intermediary experience.<br><br>
+                7. Stronger executive transparency through KPI dashboards, benefits realization reporting, and value-stream-based prioritization.<br><br>
+                8. A scalable year-two roadmap that expands OE coverage and deepens adoption across markets, functions, and lines of business.
+              </font>
+            </span>
+          </div>
+          <a class="btn btn-primary" href="#top">Back to top</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hidden compatibility placeholders so original scripts remain untouched and do not error -->
+    <section aria-hidden="true" style="display:none;">
+      <div id="heroPillars"></div>
+      <div id="frameworkGrid"></div>
+      <div id="filterBar"></div>
+      <div id="capabilityGrid"></div>
+      <div id="driverGrid"></div>
+    </section>
+
+    <footer>
+      <p class="copyright">
+        Allianz AI &amp; Data Transformation Blueprint<br>
+        <i>Updated for executive-level role framing and global transformation planning</i><br>
+        Prepared as a board-ready, consulting-style single-page artifact
+      </p>
+    </footer>
+  </main>
+
+  <div class="NAV_mask overlay-hugeinc" id="legacyOverlay">
+    <nav id="legacyOverlayNav">
+      <ul>
+        <li>
+          <a href="./work.html">
+            <span class="main">WORK</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="./skills.html">
+            <span class="main">SKILLS</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="./projects.html">
+            <span class="main">PROJECTS</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="./tech.html">
+            <span class="main">TECHNOLOGIES</span>
+          </a>
+        </li>
+        <li>
+          <a href="./mentors.html">
+            <span class="main">MENTORS</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../blog/index.html">
+            <span class="main">BLOGS</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="../index.html">
+            <span class="main">HOME</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <link rel="stylesheet" type="text/css" href="./css/layout_work.css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="./css/content_work.css" media="screen" />
+
+  <link rel="stylesheet" type="text/css" href="./css/font.css" />
+  <script src="./js/modernizr.custom.js"></script>
+  <script src="./js/jquery.2.1.4.min.js"></script>
+  <script src="./js/loading.js"></script>
+  <script src="./js/GA.js"></script>
+  <script src="./js/classie.js"></script>
+  <script src="./js/NAV.js"></script>
+  <script src="./js/page_jq.js"></script>
+
+  <script type="module">
+    /**
+     * Single-file browser-ready implementation.
+     * TypeScript-style JSDoc is used here so the code stays maintainable
+     * while still running directly in any modern browser.
+     */
+
+    /**
+     * @typedef {Object} Pillar
+     * @property {string} id
+     * @property {string} short
+     * @property {string} title
+     * @property {string} description
+     * @property {string[]} items
+     */
+
+    /**
+     * @typedef {Object} Capability
+     * @property {string} name
+     * @property {string} pillar
+     * @property {string} description
+     * @property {string[]} tags
+     */
+
+    /** @type {Pillar[]} */
+    const pillars = [
+      {
+        id: "value-chain",
+        short: "VC",
+        title: "Value Chain",
+        description: "Growth, market expansion, portfolio strategy, underwriting, and performance orchestration.",
+        items: [
+          "Market &amp; Distribution",
+          "Customer Lifecycle",
+          "Products &amp; Portfolio",
+          "Risk &amp; Underwriting",
+          "Finance &amp; Performance"
+        ]
+      },
+      {
+        id: "target-operating-model",
+        short: "TOM",
+        title: "Target Operating Model",
+        description: "Business structure, governance, accountability, and enterprise operating discipline.",
+        items: [
+          "Business Model",
+          "Organization &amp; Governance",
+          "Risk &amp; Underwriting",
+          "Finance &amp; Performance"
+        ]
+      },
+      {
+        id: "tech-foundation",
+        short: "TF",
+        title: "Tech &amp; Foundation",
+        description: "Core platforms, experience, cloud, integration, and insight-led decisioning.",
+        items: [
+          "Core Platforms",
+          "Data &amp; Analytics",
+          "Digital &amp; Experience",
+          "Integration &amp; Cloud"
+        ]
+      },
+      {
+        id: "risk-change",
+        short: "RC",
+        title: "Risk &amp; Change",
+        description: "Risk controls, adoption, execution management, and sustained transformation outcomes.",
+        items: [
+          "Enterprise Risk &amp; Compliance",
+          "Performance Management",
+          "Change Management",
+          "Adoption &amp; Growth"
+        ]
+      }
+    ];
+
+    /** @type {Capability[]} */
+    const capabilities = [
+      {
+        name: "Market &amp; Distribution",
+        pillar: "value-chain",
+        description: "Shape acquisition strategy, channel effectiveness, broker alignment, and distribution growth plays.",
+        tags: ["Growth", "Channels", "Go-to-market"]
+      },
+      {
+        name: "Customer Lifecycle",
+        pillar: "value-chain",
+        description: "Design lifecycle journeys across onboarding, service, retention, and renewal optimization.",
+        tags: ["Experience", "Retention", "Lifecycle"]
+      },
+      {
+        name: "Products &amp; Portfolio",
+        pillar: "value-chain",
+        description: "Refine portfolio mix, proposition design, product innovation, and strategic pricing alignment.",
+        tags: ["Portfolio", "Pricing", "Product"]
+      },
+      {
+        name: "Risk &amp; Underwriting",
+        pillar: "value-chain",
+        description: "Strengthen underwriting discipline with better decision support, segmentation, and controls.",
+        tags: ["Risk", "Underwriting", "Decisioning"]
+      },
+      {
+        name: "Finance &amp; Performance",
+        pillar: "value-chain",
+        description: "Measure growth economics, value realization, and business outcomes across the operating model.",
+        tags: ["Performance", "Finance", "Value"]
+      },
+      {
+        name: "Business Model",
+        pillar: "target-operating-model",
+        description: "Clarify enterprise design choices, service model, ownership boundaries, and value streams.",
+        tags: ["Model", "Strategy", "Structure"]
+      },
+      {
+        name: "Organization &amp; Governance",
+        pillar: "target-operating-model",
+        description: "Define governance forums, role clarity, decision rights, and execution accountability.",
+        tags: ["Governance", "Org", "Operating rhythm"]
+      },
+      {
+        name: "Risk &amp; Underwriting",
+        pillar: "target-operating-model",
+        description: "Embed underwriting controls and risk principles into the operating model and governance layer.",
+        tags: ["Controls", "Risk", "Standards"]
+      },
+      {
+        name: "Finance &amp; Performance",
+        pillar: "target-operating-model",
+        description: "Create performance transparency, funding visibility, and KPI ownership across the model.",
+        tags: ["KPIs", "Funding", "Performance"]
+      },
+      {
+        name: "Core Platforms",
+        pillar: "tech-foundation",
+        description: "Modernize policy, claims, billing, and shared platform foundations for scale and resilience.",
+        tags: ["Platforms", "Core systems", "Scale"]
+      },
+      {
+        name: "Data &amp; Analytics",
+        pillar: "tech-foundation",
+        description: "Use trusted data, insight, and analytics to improve pricing, service, and operational performance.",
+        tags: ["Data", "Analytics", "Insight"]
+      },
+      {
+        name: "Digital &amp; Experience",
+        pillar: "tech-foundation",
+        description: "Deliver intuitive digital journeys with a premium omnichannel experience layer.",
+        tags: ["UX", "Digital", "Journey"]
+      },
+      {
+        name: "Integration &amp; Cloud",
+        pillar: "tech-foundation",
+        description: "Enable interoperability, cloud-native flexibility, and faster change through modern integration.",
+        tags: ["Cloud", "Integration", "Architecture"]
+      },
+      {
+        name: "Enterprise Risk &amp; Compliance",
+        pillar: "risk-change",
+        description: "Support transformation with control frameworks, compliance alignment, and regulatory readiness.",
+        tags: ["Compliance", "Risk", "Controls"]
+      },
+      {
+        name: "Performance Management",
+        pillar: "risk-change",
+        description: "Track outcomes, transformation health, and value delivery with enterprise-wide management discipline.",
+        tags: ["Metrics", "Delivery", "Value realization"]
+      },
+      {
+        name: "Change Management",
+        pillar: "risk-change",
+        description: "Drive stakeholder readiness, communications, training, and sustainable adoption at scale.",
+        tags: ["Change", "Readiness", "Adoption"]
+      },
+      {
+        name: "Adoption &amp; Growth",
+        pillar: "risk-change",
+        description: "Translate program outcomes into behavioral uptake, realized capability, and business growth.",
+        tags: ["Adoption", "Growth", "Scale-up"]
+      }
+    ];
+
+    const drivers = [
+      { title: "Growth", subtitle: "Revenue acceleration" },
+      { title: "Cost", subtitle: "Efficiency leverage" },
+      { title: "Experience", subtitle: "Customer &amp; employee" },
+      { title: "Performance", subtitle: "Outcome visibility" },
+      { title: "Transformation", subtitle: "Sustained execution" }
+    ];
+
+    const frameworkGrid = document.getElementById("frameworkGrid");
+    const capabilityGrid = document.getElementById("capabilityGrid");
+    const driverGrid = document.getElementById("driverGrid");
+    const filterBar = document.getElementById("filterBar");
+    const heroPillars = document.getElementById("heroPillars");
+
+    const pillarLabelMap = new Map(pillars.map(p => [p.id, p.title]));
+
+    /**
+     * @param {Pillar} pillar
+     * @param {number} index
+     * @returns {string}
+     */
+    function pillarTemplate(pillar, index) {
+      return `
+        <article class="pillar reveal spotlight">
+          <div class="pillar-head">
+            <div style="display:flex;align-items:center;gap:.8rem;">
+              <div class="pillar-badge">${pillar.short}</div>
+              <div>
+                <h3>${pillar.title}</h3>
+                <div style="color:var(--muted);font-size:.86rem;">Pillar ${index + 1}</div>
+              </div>
+            </div>
+          </div>
+          <div style="color:var(--muted);line-height:1.7;font-size:.95rem;">
+            ${pillar.description}
+          </div>
+          <ul>
+            ${pillar.items.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </article>
+      `;
+    }
+
+    /**
+     * @param {Capability} item
+     * @returns {string}
+     */
+    function capabilityTemplate(item) {
+      return `
+        <article class="capability-card reveal spotlight" data-pillar="${item.pillar}">
+          <div class="capability-top">
+            <div>
+              <h3>${item.name}</h3>
+            </div>
+            <span class="capability-type">${pillarLabelMap.get(item.pillar)}</span>
+          </div>
+          <p>${item.description}</p>
+          <div class="capability-tags">
+            ${item.tags.map(tag => `<span>${tag}</span>`).join("")}
+          </div>
+        </article>
+      `;
+    }
+
+    /**
+     * @param {{title: string, subtitle: string}} driver
+     * @returns {string}
+     */
+    function driverTemplate(driver) {
+      return `
+        <div class="driver-pill reveal spotlight">
+          <div>
+            <span class="mini">${driver.subtitle}</span>
+            <strong>${driver.title}</strong>
+          </div>
+          <span class="driver-dot" aria-hidden="true"></span>
+        </div>
+      `;
+    }
+
+    frameworkGrid.innerHTML = pillars.map(pillarTemplate).join("");
+    heroPillars.innerHTML = pillars.map((pillar) => `
+      <div class="orbit-card">
+        <span class="tag">${pillar.short}</span>
+        <strong>${pillar.title}</strong>
+      </div>
+    `).join("");
+    driverGrid.innerHTML = drivers.map(driverTemplate).join("");
+
+    const filters = [
+      { id: "all", label: "All" },
+      ...pillars.map(p => ({ id: p.id, label: p.title }))
+    ];
+
+    filterBar.innerHTML = filters.map((filter, i) => `
+      <button class="chip ${i === 0 ? "active" : ""}" data-filter="${filter.id}">
+        ${filter.label}
+      </button>
+    `).join("");
+
+    /**
+     * @param {string} selected
+     */
+    function renderCapabilities(selected = "all") {
+      const filtered = selected === "all"
+        ? capabilities
+        : capabilities.filter(item => item.pillar === selected);
+
+      capabilityGrid.innerHTML = filtered.map(capabilityTemplate).join("");
+      setupReveal();
+      setupSpotlight();
+    }
+
+    renderCapabilities();
+
+    filterBar.addEventListener("click", (event) => {
+      const target = /** @type {HTMLElement | null} */ (event.target instanceof HTMLElement ? event.target : null);
+      if (!target || !target.matches("[data-filter]")) return;
+
+      const selected = target.getAttribute("data-filter") || "all";
+      document.querySelectorAll(".chip").forEach(btn => btn.classList.remove("active"));
+      target.classList.add("active");
+      renderCapabilities(selected);
+    });
+
+    function setupReveal() {
+      const items = document.querySelectorAll(".reveal");
+
+      if (!("IntersectionObserver" in window)) {
+        items.forEach(el => el.classList.add("show"));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.14
+      });
+
+      items.forEach(el => {
+        if (!el.classList.contains("show")) observer.observe(el);
+      });
+    }
+
+    function setupSpotlight() {
+      document.querySelectorAll(".spotlight").forEach((card) => {
+        if (card.dataset.bound === "true") return;
+        card.dataset.bound = "true";
+
+        card.addEventListener("pointermove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((e.clientX - rect.left) / rect.width) * 100;
+          const y = ((e.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty("--mx", `${x}%`);
+          card.style.setProperty("--my", `${y}%`);
+        });
+      });
+    }
+
+    setupReveal();
+    setupSpotlight();
+  </script>
+
+  <script>
+    (function () {
+      const overlay = document.getElementById("legacyOverlay");
+      const trigger = document.getElementById("MENU_trigger");
+      const navInput = document.getElementById("NAV_input");
+      const menuBtn = document.querySelector(".MENU_btn");
+      const overlayNav = document.getElementById("legacyOverlayNav");
+
+      if (!overlay || !trigger || !navInput || !menuBtn || !overlayNav) return;
+
+      function openMenu() {
+        overlay.classList.add("open");
+        overlay.classList.remove("close");
+        document.body.classList.add("fixed");
+        navInput.checked = true;
+        menuBtn.classList.add("open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+
+      function closeMenu() {
+        overlay.classList.remove("open");
+        overlay.classList.add("close");
+        document.body.classList.remove("fixed");
+        navInput.checked = false;
+        menuBtn.classList.remove("open");
+        trigger.setAttribute("aria-expanded", "false");
+
+        window.setTimeout(() => {
+          overlay.classList.remove("close");
+        }, 500);
+      }
+
+      navInput.addEventListener("change", function () {
+        if (navInput.checked) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") {
+          closeMenu();
+        }
+      });
+
+      overlay.addEventListener("pointerdown", function (e) {
+        if (e.target === overlay) {
+          closeMenu();
+        }
+      });
+
+      overlay.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          closeMenu();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
