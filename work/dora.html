@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DORA — Digital Operational Resilience Act</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dim: #8A6E2F;
+    --navy: #060D1F;
+    --navy-mid: #0C1A3A;
+    --navy-light: #132247;
+    --blue-bright: #1A5CFF;
+    --blue-accent: #3B7BFF;
+    --teal: #00C2C7;
+    --teal-dim: #007A7E;
+    --white: #F4F6FF;
+    --muted: #8B96B8;
+    --pillar1: #1A5CFF;
+    --pillar2: #7B2FFF;
+    --pillar3: #00C2C7;
+    --pillar4: #FF6B35;
+    --pillar5: #C9A84C;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── ANIMATED BG ── */
+  .bg-canvas {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, #0D2060 0%, var(--navy) 60%);
+    pointer-events: none;
+  }
+  .bg-canvas::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle 600px at 10% 80%, rgba(26,92,255,0.07) 0%, transparent 70%),
+      radial-gradient(circle 400px at 90% 20%, rgba(123,47,255,0.06) 0%, transparent 70%);
+  }
+  .grid-lines {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── LAYOUT ── */
+  .page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 32px 80px; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 72px 0 48px;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.06);
+    padding: 6px 18px; border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, #fff 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+  }
+  .hero-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(13px, 2vw, 18px);
+    font-weight: 400;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .hero-desc {
+    max-width: 660px; margin: 0 auto 48px;
+    font-size: 15px; color: rgba(180,190,220,0.85);
+    line-height: 1.8;
+  }
+  .hero-meta {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
+    color: var(--gold); display: block;
+  }
+  .hero-stat .lbl { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── GOVERNANCE ARC ── */
+  .governance-arc {
+    position: relative;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .gov-bar {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: linear-gradient(135deg, rgba(26,92,255,0.15), rgba(201,168,76,0.12));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 16px;
+    padding: 18px 36px;
+    max-width: 820px;
+    margin: 0 auto;
+    backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  .gov-bar::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .gov-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.1));
+    border: 1px solid rgba(201,168,76,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .gov-content { text-align: left; }
+  .gov-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+  .gov-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .gov-tag {
+    font-size: 11px; color: rgba(180,200,255,0.8);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 3px 10px;
+  }
+  .gov-arrow {
+    width: 40px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 22px;
+  }
+
+  /* ── CONNECTOR ── */
+  .connector-line {
+    display: flex; justify-content: center; align-items: flex-start;
+    height: 32px; gap: 0;
+    margin-bottom: -2px;
+    position: relative; z-index: 2;
+  }
+  .connector-line svg { width: 820px; height: 32px; overflow: visible; }
+
+  /* ── 5 PILLARS ── */
+  .pillars-section { margin-bottom: 64px; }
+  .pillars-label {
+    text-align: center; margin-bottom: 20px;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    perspective: 1200px;
+  }
+
+  .pillar-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    animation: riseIn 0.7s both;
+  }
+  .pillar-card:nth-child(1) { animation-delay: 0.1s; }
+  .pillar-card:nth-child(2) { animation-delay: 0.2s; }
+  .pillar-card:nth-child(3) { animation-delay: 0.3s; }
+  .pillar-card:nth-child(4) { animation-delay: 0.4s; }
+  .pillar-card:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(30px) rotateX(8deg); }
+    to   { opacity: 1; transform: translateY(0) rotateX(0deg); }
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-8px) rotateX(-2deg) scale(1.02);
+    z-index: 10;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(160deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+    z-index: 1; pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* 3D pedestal effect */
+  .pillar-card::after {
+    content: '';
+    position: absolute; bottom: -6px; left: 6px; right: 6px; height: 6px;
+    border-radius: 0 0 12px 12px;
+    opacity: 0.5;
+    transition: opacity 0.4s;
+  }
+  .pillar-card:hover::after { opacity: 0.8; }
+
+  .p1::after { background: var(--pillar1); filter: blur(4px); }
+  .p2::after { background: var(--pillar2); filter: blur(4px); }
+  .p3::after { background: var(--pillar3); filter: blur(4px); }
+  .p4::after { background: var(--pillar4); filter: blur(4px); }
+  .p5::after { background: var(--pillar5); filter: blur(4px); }
+
+  .pillar-inner {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px 18px 20px;
+    height: 100%;
+    display: flex; flex-direction: column; gap: 12px;
+    position: relative; z-index: 2;
+  }
+
+  .p1 .pillar-inner { border-top: 3px solid var(--pillar1); background: linear-gradient(160deg, rgba(26,92,255,0.12) 0%, var(--navy-light) 50%); }
+  .p2 .pillar-inner { border-top: 3px solid var(--pillar2); background: linear-gradient(160deg, rgba(123,47,255,0.12) 0%, var(--navy-light) 50%); }
+  .p3 .pillar-inner { border-top: 3px solid var(--pillar3); background: linear-gradient(160deg, rgba(0,194,199,0.12) 0%, var(--navy-light) 50%); }
+  .p4 .pillar-inner { border-top: 3px solid var(--pillar4); background: linear-gradient(160deg, rgba(255,107,53,0.12) 0%, var(--navy-light) 50%); }
+  .p5 .pillar-inner { border-top: 3px solid var(--pillar5); background: linear-gradient(160deg, rgba(201,168,76,0.12) 0%, var(--navy-light) 50%); }
+
+  .pillar-num {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0.5;
+  }
+  .p1 .pillar-num { color: var(--pillar1); }
+  .p2 .pillar-num { color: var(--pillar2); }
+  .p3 .pillar-num { color: var(--pillar3); }
+  .p4 .pillar-num { color: var(--pillar4); }
+  .p5 .pillar-num { color: var(--pillar5); }
+
+  .pillar-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    position: relative;
+  }
+  .p1 .pillar-icon { background: rgba(26,92,255,0.18); box-shadow: 0 4px 20px rgba(26,92,255,0.3); }
+  .p2 .pillar-icon { background: rgba(123,47,255,0.18); box-shadow: 0 4px 20px rgba(123,47,255,0.3); }
+  .p3 .pillar-icon { background: rgba(0,194,199,0.18); box-shadow: 0 4px 20px rgba(0,194,199,0.3); }
+  .p4 .pillar-icon { background: rgba(255,107,53,0.18); box-shadow: 0 4px 20px rgba(255,107,53,0.3); }
+  .p5 .pillar-icon { background: rgba(201,168,76,0.18); box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
+
+  .pillar-name {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    color: var(--white); line-height: 1.3;
+  }
+  .pillar-desc { font-size: 11.5px; color: var(--muted); line-height: 1.6; flex: 1; }
+
+  .pillar-tags { display: flex; flex-direction: column; gap: 5px; }
+  .pillar-tag {
+    font-size: 10px; font-weight: 500;
+    padding: 4px 8px; border-radius: 6px;
+    border: 1px solid;
+  }
+  .p1 .pillar-tag { color: var(--pillar1); border-color: rgba(26,92,255,0.3); background: rgba(26,92,255,0.08); }
+  .p2 .pillar-tag { color: var(--pillar2); border-color: rgba(123,47,255,0.3); background: rgba(123,47,255,0.08); }
+  .p3 .pillar-tag { color: var(--pillar3); border-color: rgba(0,194,199,0.3); background: rgba(0,194,199,0.08); }
+  .p4 .pillar-tag { color: var(--pillar4); border-color: rgba(255,107,53,0.3); background: rgba(255,107,53,0.08); }
+  .p5 .pillar-tag { color: var(--pillar5); border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.08); }
+
+  /* ── FRAMEWORKS ROW ── */
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+
+  .frameworks-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 56px;
+  }
+  .fw-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 18px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .fw-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); }
+  .fw-badge {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em;
+    display: inline-block; padding: 3px 10px; border-radius: 6px; margin-bottom: 10px;
+  }
+  .fw-card:nth-child(1) .fw-badge { background: rgba(26,92,255,0.15); color: #6C9FFF; }
+  .fw-card:nth-child(2) .fw-badge { background: rgba(0,194,199,0.15); color: var(--teal); }
+  .fw-card:nth-child(3) .fw-badge { background: rgba(123,47,255,0.15); color: #A67BFF; }
+  .fw-card:nth-child(4) .fw-badge { background: rgba(255,107,53,0.15); color: #FF9F7A; }
+  .fw-card:nth-child(5) .fw-badge { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .fw-card:nth-child(6) .fw-badge { background: rgba(26,92,255,0.12); color: #7BB5FF; }
+  .fw-card:nth-child(7) .fw-badge { background: rgba(255,50,50,0.12); color: #FF8A8A; }
+  .fw-card:nth-child(8) .fw-badge { background: rgba(0,200,100,0.12); color: #50E3A0; }
+  .fw-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .fw-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+  /* ── BOTTOM SPLIT ── */
+  .bottom-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .info-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .info-card-title {
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    color: var(--white); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .info-card-title .icon { font-size: 20px; }
+
+  .capability-list { display: flex; flex-direction: column; gap: 10px; }
+  .cap-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 12px; color: rgba(180,190,220,0.85); line-height: 1.5;
+  }
+  .cap-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: flex; gap: 16px; position: relative;
+  }
+  .tl-item:not(:last-child)::after {
+    content: ''; position: absolute; left: 14px; top: 28px; bottom: -10px; width: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .tl-dot-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .tl-dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; font-family: 'Syne', sans-serif;
+    flex-shrink: 0;
+  }
+  .tl-content { padding-bottom: 20px; }
+  .tl-date { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .tl-text { font-size: 12px; color: rgba(180,190,220,0.85); line-height: 1.5; }
+
+  /* ── SCOPE STRIP ── */
+  .scope-strip {
+    background: linear-gradient(135deg, rgba(26,92,255,0.1), rgba(201,168,76,0.08));
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 48px;
+    position: relative; overflow: hidden;
+  }
+  .scope-strip::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .scope-eu {
+    font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800;
+    color: var(--gold); letter-spacing: -0.02em; line-height: 1;
+    text-shadow: 0 0 40px rgba(201,168,76,0.4);
+  }
+  .scope-right {}
+  .scope-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+  .scope-entities {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .ent-tag {
+    font-size: 11px; color: rgba(180,200,255,0.85);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 5px 12px;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 32px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .footer-reg {
+    font-size: 11px; color: rgba(139,150,184,0.6);
+    max-width: 600px;
+  }
+
+  /* ── SABSA ATTRIBUTES ── */
+  .attributes-wrap {
+    margin-bottom: 48px;
+  }
+  .attributes-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .attr-chip {
+    font-size: 11px; padding: 5px 14px; border-radius: 100px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(180,190,220,0.8);
+    transition: all 0.2s;
+  }
+  .attr-chip:hover { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.3); color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .pillars-grid { grid-template-columns: repeat(3, 1fr); }
+    .frameworks-grid { grid-template-columns: repeat(2, 1fr); }
+    .bottom-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    .gov-bar { flex-direction: column; text-align: center; }
+    .scope-strip { grid-template-columns: 1fr; text-align: center; }
+    .scope-entities { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-canvas"></div>
+<div class="grid-lines"></div>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      EU Regulation (EU) 2022/2554
+      <span class="dot"></span>
+    </div>
+    <h1>DORA</h1>
+    <div class="hero-sub">Digital Operational Resilience Act</div>
+    <p class="hero-desc">
+      A single rule book for digital operational resilience across the EU financial sector and its ICT service providers — translating cyber governance, incident management, resilience testing, third-party oversight, and threat intelligence into enforceable standards.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-stat"><span class="num">5</span><span class="lbl">Pillars</span></div>
+      <div class="hero-stat"><span class="num">Jan '25</span><span class="lbl">In Force</span></div>
+      <div class="hero-stat"><span class="num">EU+</span><span class="lbl">Global Reach</span></div>
+      <div class="hero-stat"><span class="num">20+</span><span class="lbl">Entity Types</span></div>
+    </div>
+  </div>
+
+  <!-- GOVERNANCE BANNER -->
+  <div class="governance-arc">
+    <div class="gov-bar">
+      <div class="gov-icon">🏛</div>
+      <div class="gov-content">
+        <div class="gov-title">Governance — The Overarching Umbrella</div>
+        <div class="gov-items">
+          <span class="gov-tag">Full approval &amp; control processes</span>
+          <span class="gov-tag">Clear R&amp;R across ICT risk</span>
+          <span class="gov-tag">Continuous monitoring</span>
+          <span class="gov-tag">ICT investment &amp; training oversight</span>
+          <span class="gov-tag">Internal audit / BC plans</span>
+          <span class="gov-tag">Third-party framework oversight</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECTOR SVG -->
+  <div class="connector-line">
+    <svg viewBox="0 0 820 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="82" y1="0" x2="82" y2="32" stroke="rgba(26,92,255,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="246" y1="0" x2="246" y2="32" stroke="rgba(123,47,255,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="410" y1="0" x2="410" y2="32" stroke="rgba(0,194,199,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="574" y1="0" x2="574" y2="32" stroke="rgba(255,107,53,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+      <line x1="738" y1="0" x2="738" y2="32" stroke="rgba(201,168,76,0.4)" stroke-width="1" stroke-dasharray="4 4"/>
+    </svg>
+  </div>
+
+  <!-- PILLAR LABEL -->
+  <div class="pillars-label">The Five Pillars of DORA</div>
+
+  <!-- 5 PILLARS -->
+  <div class="pillars-grid pillars-section">
+
+    <div class="pillar-card p1">
+      <div class="pillar-inner">
+        <span class="pillar-num">Pillar 01</span>
+        <div class="pillar-icon">🛡</div>
+        <div class="pillar-name">ICT Risk Management</div>
+        <div class="pillar-desc">Documented framework of strategy, policy, risk assessment, continuous monitoring, and audit for managing all ICT risks across the organization.</div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Identification &amp; Prevention</span>
+          <span class="pillar-tag">Detection &amp; Response</span>
+          <span class="pillar-tag">Backup &amp; Recovery</span>
+          <span class="pillar-tag">RTO / RPO targets</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card p2">
+      <div class="pillar-inner">
+        <span class="pillar-num">Pillar 02</span>
+        <div class="pillar-icon">🚨</div>
+        <div class="pillar-name">ICT Incident Management</div>
+        <div class="pillar-desc">Standardised classification and major incident reporting to national authorities, with root-cause analysis and evidence-based remediation.</div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Major incident classification</span>
+          <span class="pillar-tag">Regulator reporting</span>
+          <span class="pillar-tag">Blast radius analysis</span>
+          <span class="pillar-tag">Anomaly detection</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card p3">
+      <div class="pillar-inner">
+        <span class="pillar-num">Pillar 03</span>
+        <div class="pillar-icon">🧪</div>
+        <div class="pillar-name">Digital Resilience Testing</div>
+        <div class="pillar-desc">Regular, structured testing of ICT systems including vulnerability assessments, network security reviews, source code analysis, and threat-led penetration testing (TLPT/TIBER-EU).</div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Vulnerability assessments</span>
+          <span class="pillar-tag">TLPT / TIBER-EU</span>
+          <span class="pillar-tag">Chaos engineering</span>
+          <span class="pillar-tag">Pen testing in production</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card p4">
+      <div class="pillar-inner">
+        <span class="pillar-num">Pillar 04</span>
+        <div class="pillar-icon">🤝</div>
+        <div class="pillar-name">ICT Third-Party Risk</div>
+        <div class="pillar-desc">Comprehensive oversight of ICT service providers including contract registers, due diligence, lead overseer audits, service-level assurance, and exit strategy planning.</div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">Contract register</span>
+          <span class="pillar-tag">Lead overseer</span>
+          <span class="pillar-tag">Cloud CSP oversight</span>
+          <span class="pillar-tag">Exit strategy</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pillar-card p5">
+      <div class="pillar-inner">
+        <span class="pillar-num">Pillar 05</span>
+        <div class="pillar-icon">📡</div>
+        <div class="pillar-name">Information Sharing</div>
+        <div class="pillar-desc">Exchange of cyber threat intelligence, indicators of compromise, tactics, techniques, and procedures within trusted financial communities using Traffic Light Protocol.</div>
+        <div class="pillar-tags">
+          <span class="pillar-tag">FS-ISAC communities</span>
+          <span class="pillar-tag">Traffic Light Protocol</span>
+          <span class="pillar-tag">Threat intelligence</span>
+          <span class="pillar-tag">Collective defense</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCOPE STRIP -->
+  <div class="scope-strip">
+    <div class="scope-eu">EU+</div>
+    <div class="scope-right">
+      <div class="scope-title">DORA Scope — Who Must Comply</div>
+      <div class="scope-entities">
+        <span class="ent-tag">Credit Institutions</span>
+        <span class="ent-tag">Payment Institutions</span>
+        <span class="ent-tag">Insurance Undertakings</span>
+        <span class="ent-tag">Investment Firms</span>
+        <span class="ent-tag">Crypto Asset Providers</span>
+        <span class="ent-tag">Cloud Service Providers</span>
+        <span class="ent-tag">ICT Third-Party Providers</span>
+        <span class="ent-tag">Data Reporting Services</span>
+        <span class="ent-tag">Central Securities Depositories</span>
+        <span class="ent-tag">Trade Repositories</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRAMEWORKS -->
+  <div class="section-title">Supporting Frameworks &amp; Standards</div>
+  <div class="frameworks-grid">
+    <div class="fw-card">
+      <span class="fw-badge">NIS2</span>
+      <div class="fw-name">Network &amp; Information Security</div>
+      <div class="fw-desc">Underpins the cybersecurity required by DORA. DORA adds stronger resilience and continuity focus on top of NIS2 obligations.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">NIST CSF</span>
+      <div class="fw-name">NIST Cybersecurity Framework</div>
+      <div class="fw-desc">Organizations using NIST CSF are part-way toward DORA alignment across all pillars except information sharing.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">SABSA</span>
+      <div class="fw-name">Security Architecture</div>
+      <div class="fw-desc">Converts DORA requirements into business-relevant resilience attributes: availability, authenticity, integrity, auditability, containment.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">TIBER-EU</span>
+      <div class="fw-name">Threat Intelligence Red Teaming</div>
+      <div class="fw-desc">Structures threat-led penetration testing for selected financial entities, run on production systems under national authority oversight.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">TLP</span>
+      <div class="fw-name">Traffic Light Protocol</div>
+      <div class="fw-desc">Protects shared cyber threat intelligence with standardized handling rules across trusted financial communities.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">3LOD</span>
+      <div class="fw-name">Three Lines of Defense</div>
+      <div class="fw-desc">Business risk ownership, risk advisory, and independent audit — the governance segregation model underlying DORA compliance.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">RTS/ITS</span>
+      <div class="fw-name">Regulatory Technical Standards</div>
+      <div class="fw-desc">Implementing Technical Standards defining incident classification, TLPT requirements, and third-party contract clauses in detail.</div>
+    </div>
+    <div class="fw-card">
+      <span class="fw-badge">Chaos Eng.</span>
+      <div class="fw-name">Chaos Engineering</div>
+      <div class="fw-desc">Resilience testing by deliberately injecting failures to validate system behavior — hypothesis-driven, with kill switches and blast-radius limits.</div>
+    </div>
+  </div>
+
+  <!-- BOTTOM SPLIT -->
+  <div class="bottom-grid">
+
+    <div class="info-card">
+      <div class="info-card-title"><span class="icon">⚡</span>Key Technical Controls</div>
+      <div class="capability-list">
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar1)"></span>Strong authentication &amp; cryptographic key protection</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar2)"></span>Anomaly detection &amp; automated network segmentation</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar3)"></span>Backup, restoration &amp; secondary processing sites</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar4)"></span>RTO/RPO-aligned recovery objectives per criticality</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar5)"></span>Change management, patching &amp; data integrity controls</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar1)"></span>Observability &amp; failure instrumentation for chaos testing</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--pillar2)"></span>Kubernetes-based resilience pipelines (e.g. Testkube)</div>
+        <div class="cap-item"><span class="cap-dot" style="background:var(--teal)"></span>RAG-powered regulatory querying for compliance acceleration</div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title"><span class="icon">📅</span>DORA Timeline</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot" style="background:rgba(26,92,255,0.2);color:var(--pillar1)">1</div></div>
+          <div class="tl-content">
+            <div class="tl-date">December 2022</div>
+            <div class="tl-text">DORA published in the Official Journal of the EU as Regulation (EU) 2022/2554. Enters into force 20 days later.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot" style="background:rgba(123,47,255,0.2);color:var(--pillar2)">2</div></div>
+          <div class="tl-content">
+            <div class="tl-date">2023 — 2024</div>
+            <div class="tl-text">ESAs publish Regulatory Technical Standards and Implementing Technical Standards for incident classification, TLPT, and third-party contracts.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot" style="background:rgba(0,194,199,0.2);color:var(--teal)">3</div></div>
+          <div class="tl-content">
+            <div class="tl-date">January 2025</div>
+            <div class="tl-text">DORA becomes fully applicable. All in-scope financial entities and ICT third-party providers must demonstrate compliance.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot-wrap"><div class="tl-dot" style="background:rgba(201,168,76,0.2);color:var(--gold)">4</div></div>
+          <div class="tl-content">
+            <div class="tl-date">Ongoing</div>
+            <div class="tl-text">Competent authorities conduct supervisory reviews. Critical ICT third-party providers subject to Lead Overseer audits and investigations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SABSA ATTRIBUTES -->
+  <div class="attributes-wrap">
+    <div class="section-title">SABSA Resilience Attributes from DORA Requirements</div>
+    <div class="attributes-grid">
+      <span class="attr-chip">Availability</span>
+      <span class="attr-chip">Authenticity</span>
+      <span class="attr-chip">Integrity</span>
+      <span class="attr-chip">Confidentiality</span>
+      <span class="attr-chip">Governed</span>
+      <span class="attr-chip">Effective</span>
+      <span class="attr-chip">Timely</span>
+      <span class="attr-chip">Continuous</span>
+      <span class="attr-chip">Monitored</span>
+      <span class="attr-chip">Auditable</span>
+      <span class="attr-chip">Educated</span>
+      <span class="attr-chip">Aware</span>
+      <span class="attr-chip">Informed</span>
+      <span class="attr-chip">Controlled</span>
+      <span class="attr-chip">Duty Segregated</span>
+      <span class="attr-chip">Detectable</span>
+      <span class="attr-chip">Contained</span>
+      <span class="attr-chip">Redundant</span>
+      <span class="attr-chip">Business Assessed</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">DORA Reference Guide</div>
+    <div class="footer-reg">Based on Regulation (EU) 2022/2554 of the European Parliament and of the Council on digital operational resilience for the financial sector. Effective January 2025.</div>
+  </div>
+
+</div>
+
+<script>
+  // Subtle parallax tilt on pillar cards
+  document.querySelectorAll('.pillar-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      card.style.transform = `translateY(-8px) rotateY(${dx * 6}deg) rotateX(${-dy * 4}deg) scale(1.02)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+</script>
+</body>
+</html>
