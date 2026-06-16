@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGA to Carrier: The $120M Blueprint | Samuel Kennet Rajkumar</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{colors:{navy:'#0A2342','navy-dark':'#061629','navy-mid':'#0F2D4A','navy-light':'#162C4A',gold:'#C9A84C','gold-light':'#E8C96A',teal:'#006D77','teal-light':'#1A8A95'},fontFamily:{serif:['Georgia','Cambria','serif']}}}}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow-x:hidden}
+#main{display:none}
+
+/* SCROLL PROGRESS */
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#C9A84C,#E8C96A);z-index:9998;width:0%;transition:width 0.1s linear}
+
+/* PASSWORD GATE */
+#gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#020817}
+.gate-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+.gate-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(0,109,119,0.12) 0%,transparent 70%);border-radius:50%;pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%)}
+.gate-card{position:relative;width:100%;max-width:420px;margin:0 16px;border-radius:20px;padding:40px;border:1px solid rgba(201,168,76,0.2);background:rgba(10,35,66,0.85);backdrop-filter:blur(20px)}
+.gate-card::before{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(201,168,76,0.06),transparent);pointer-events:none}
+.lock-ring{width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,0.08);animation:lock-pulse 3s ease-in-out infinite}
+@keyframes lock-pulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,0.2)}50%{box-shadow:0 0 0 16px rgba(201,168,76,0)}}
+.pwd-input{width:100%;padding:14px 48px 14px 16px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;font-size:14px;outline:none;transition:border-color 0.2s,background 0.2s;letter-spacing:2px}
+.pwd-input:focus{border-color:rgba(201,168,76,0.5);background:rgba(255,255,255,0.08)}
+.pwd-input.error{border-color:#EF4444;animation:shake 0.4s ease}
+.pwd-input.success{border-color:#10B981}
+.gate-btn{width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#0A2342;font-weight:700;font-size:14px;letter-spacing:0.5px;border:none;cursor:pointer;transition:opacity 0.2s,transform 0.1s}
+.gate-btn:hover{opacity:0.92;transform:translateY(-1px)}
+.gate-btn:active{transform:translateY(0)}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+@keyframes gate-exit{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.04)}}
+.gate-exit{animation:gate-exit 0.5s cubic-bezier(0.4,0,0.2,1) forwards}
+@keyframes main-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.main-enter{animation:main-enter 0.6s cubic-bezier(0.16,1,0.3,1) forwards}
+
+/* NAV */
+nav{position:fixed;top:2px;left:0;right:0;z-index:1000;padding:0 40px;height:62px;display:flex;align-items:center;justify-content:space-between;transition:all 0.3s}
+nav.scrolled{background:rgba(6,22,41,0.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,168,76,0.12);top:0}
+.nav-link{color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;letter-spacing:0.3px;transition:color 0.2s;padding:4px 0}
+.nav-link:hover,.nav-link.active{color:#C9A84C}
+.nav-link.active{border-bottom:1px solid #C9A84C}
+
+/* PARTICLES */
+.particle{position:absolute;color:rgba(201,168,76,0.3);font-size:10px;font-family:monospace;animation:float-particle linear infinite;will-change:transform;pointer-events:none}
+@keyframes float-particle{0%{opacity:0;transform:translateY(60px) rotate(-5deg)}15%{opacity:1}85%{opacity:0.3}100%{opacity:0;transform:translateY(-100px) rotate(5deg)}}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(201,168,76,0.1);border-bottom:1px solid rgba(201,168,76,0.1);padding:8px 0;background:rgba(15,45,74,0.5)}
+.ticker-inner{display:inline-flex;gap:0;animation:ticker 30s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:6px;padding:0 32px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,0.6)}
+.ticker-dot{width:3px;height:3px;border-radius:50%;background:#C9A84C;opacity:0.4}
+
+/* HERO */
+.hero-section{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 24px 80px;background:#0A2342;overflow:hidden}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(0,109,119,0.18) 0%,transparent 60%);pointer-events:none}
+.hero-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,0.06);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:100px;padding:6px 16px;color:#C9A84C;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:28px}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:#C9A84C;animation:dot-pulse 2s ease-in-out infinite}
+@keyframes dot-pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-title{font-family:Georgia,serif;font-size:clamp(42px,7vw,80px);font-weight:700;line-height:1.08;letter-spacing:-2.5px;color:#fff;margin-bottom:24px}
+.hero-title-accent{color:#C9A84C}
+.hero-sub{color:rgba(148,163,184,0.85);font-size:17px;max-width:560px;line-height:1.75;margin:0 auto 40px}
+.btn-gold{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#C9A84C,#E8C96A);color:#0A2342;padding:14px 28px;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:0.5px;border:none;cursor:pointer;transition:all 0.2s}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;padding:14px 28px;border-radius:8px;font-size:13px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s}
+.btn-ghost:hover{border-color:#C9A84C;color:#C9A84C}
+
+/* STATS ROW */
+.stat-row{background:#0F2D4A;border-top:1px solid rgba(201,168,76,0.12);border-bottom:1px solid rgba(201,168,76,0.08)}
+.stat-cell{text-align:center;padding:28px 16px;border-right:1px solid rgba(201,168,76,0.08)}
+.stat-cell:last-child{border-right:none}
+.stat-num{font-family:Georgia,serif;font-size:34px;font-weight:700;color:#C9A84C;line-height:1}
+.stat-label{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:#64748B;margin-top:5px}
+
+/* SECTION LAYOUT */
+.section-pad{padding:88px 24px}
+.section-max{max-width:1040px;margin:0 auto}
+.section-eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;font-weight:700}
+.eyebrow-teal{color:#1A8A95}
+.eyebrow-gold{color:#C9A84C}
+.section-h2{font-family:Georgia,serif;font-size:clamp(28px,4vw,42px);font-weight:700;line-height:1.15;margin-bottom:14px}
+.section-lead{font-size:15px;line-height:1.75;color:#64748B;max-width:540px}
+
+/* CARDS */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.65s cubic-bezier(0.16,1,0.3,1),transform 0.65s cubic-bezier(0.16,1,0.3,1)}
+.reveal.d1{transition-delay:0.08s}
+.reveal.d2{transition-delay:0.16s}
+.reveal.d3{transition-delay:0.24s}
+.reveal.visible{opacity:1;transform:none}
+
+/* ADVANTAGE CARDS */
+.adv-card{border-radius:14px;padding:28px;border:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.03);transition:border-color 0.2s,background 0.2s,transform 0.2s}
+.adv-card:hover{border-color:rgba(201,168,76,0.25);background:rgba(201,168,76,0.03);transform:translateY(-3px)}
+.adv-icon{width:44px;height:44px;border-radius:10px;background:rgba(0,109,119,0.15);border:1px solid rgba(0,109,119,0.25);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.adv-title{color:#fff;font-size:15px;font-weight:700;margin-bottom:8px}
+.adv-body{color:#64748B;font-size:13px;line-height:1.7}
+.tag-pill{display:inline-block;padding:3px 12px;border-radius:100px;font-size:11px;font-weight:700;margin-top:14px}
+.tag-green{background:rgba(16,185,129,0.1);color:#6EE7B7;border:1px solid rgba(16,185,129,0.2)}
+.tag-amber{background:rgba(201,168,76,0.1);color:#C9A84C;border:1px solid rgba(201,168,76,0.2)}
+.tag-teal{background:rgba(0,109,119,0.12);color:#5ECFE0;border:1px solid rgba(0,109,119,0.25)}
+
+/* NICHE TABLE */
+.niche-card{border-radius:14px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);overflow:hidden}
+.niche-head{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center}
+.niche-row{display:flex;align-items:center;justify-content:space-between;padding:11px 20px;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.15s}
+.niche-row:last-child{border-bottom:none}
+.niche-row:hover{background:rgba(201,168,76,0.04)}
+.niche-name{color:#E2E8F0;font-size:13px;font-weight:500}
+.niche-bar-wrap{flex:1;margin:0 20px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden}
+.niche-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,#006D77,#C9A84C);width:0%;transition:width 1.2s cubic-bezier(0.16,1,0.3,1)}
+.niche-pct{background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;padding:2px 10px;border-radius:100px;font-size:10.5px;font-weight:700}
+
+/* CHART */
+#revenueChart{display:block;width:100%;border-radius:12px;overflow:hidden}
+
+/* ALERT */
+.alert-box{background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:10px;padding:16px 20px;display:flex;gap:14px}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+.alert-title{color:#C9A84C;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px}
+.alert-body{color:rgba(148,163,184,0.85);font-size:12.5px;line-height:1.65}
+
+/* REVENUE TABLE */
+.rev-tbl{width:100%;border-collapse:collapse}
+.rev-tbl th{color:#C9A84C;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;padding:10px 14px;border-bottom:1px solid rgba(201,168,76,0.15);text-align:left;font-weight:700}
+.rev-tbl td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+.rev-tbl tr:hover td{background:rgba(255,255,255,0.02)}
+.rev-tbl tr:last-child td{border-bottom:none}
+
+/* DECISION TIMELINE */
+.decision-card{border-radius:12px;padding:22px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);display:flex;gap:16px;transition:all 0.2s;cursor:default}
+.decision-card:hover{border-color:rgba(201,168,76,0.28);background:rgba(201,168,76,0.03)}
+.d-month{min-width:48px;height:48px;border-radius:50%;background:#0F2D4A;border:2px solid #C9A84C;display:flex;align-items:center;justify-content:center;color:#C9A84C;font-size:9px;font-weight:700;text-align:center;line-height:1.25;flex-shrink:0}
+.d-title{color:#F1F5F9;font-size:14px;font-weight:700;margin-bottom:6px}
+.d-body{color:#64748B;font-size:12.5px;line-height:1.65}
+.d-ok{margin-top:10px;padding:7px 12px;background:rgba(16,185,129,0.07);border-radius:6px;color:#6EE7B7;font-size:11.5px;font-weight:600;border-left:2px solid #10B981}
+
+/* CASE CARDS */
+.case-card{border-radius:14px;padding:26px;background:#fff;border:1px solid #E5E7EB;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s}
+.case-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.1)}
+.case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#C9A84C,#E8C96A)}
+.case-num{font-family:Georgia,serif;font-size:40px;font-weight:700;color:#0A2342;line-height:1;margin:10px 0 4px}
+.case-lbl{color:#64748B;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px}
+.case-founded{color:#64748B;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.case-name{color:#0A2342;font-size:18px;font-weight:700;margin-bottom:3px}
+.case-path{color:#006D77;font-size:11px;font-weight:600;margin-bottom:12px}
+.case-body{color:#64748B;font-size:12px;line-height:1.65}
+
+/* STEP ITEMS */
+.step-item{display:flex;align-items:flex-start;gap:14px;padding:15px;border:1px solid #E5E7EB;border-radius:9px;margin-bottom:9px;transition:border-color 0.2s,background 0.2s}
+.step-item:hover{border-color:#006D77;background:#F0FDFA}
+.step-n{width:30px;height:30px;border-radius:50%;background:#006D77;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-title{color:#0A2342;font-size:13px;font-weight:700;margin-bottom:3px}
+.step-body{color:#64748B;font-size:12px;line-height:1.5}
+.pathway-item{border:1px solid #E5E7EB;border-radius:10px;padding:17px;margin-bottom:10px;transition:border-color 0.2s}
+.pathway-item:hover{border-color:#006D77}
+.pathway-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.pathway-name{color:#0A2342;font-size:13px;font-weight:700}
+.badge-fast{background:#006D77;color:#fff;font-size:9px;padding:2px 8px;border-radius:100px;font-weight:700;letter-spacing:0.5px}
+.pathway-body{color:#64748B;font-size:12px;line-height:1.5;margin-bottom:7px}
+.pathway-meta{display:flex;gap:16px;font-size:11px;color:#64748B}
+.pathway-meta strong{color:#0A2342}
+
+/* WARNING */
+.warn-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:16px 18px}
+.warn-title{color:#991B1B;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.warn-body{color:#7F1D1D;font-size:12.5px;line-height:1.65}
+
+/* FOOTER */
+.footer-sec{background:#061629;padding:72px 24px;text-align:center;border-top:1px solid rgba(201,168,76,0.12)}
+.q-mark{font-family:Georgia,serif;font-size:64px;color:#C9A84C;line-height:0.8;margin-bottom:16px}
+.q-text{font-family:Georgia,serif;font-size:clamp(17px,2.5vw,22px);font-style:italic;line-height:1.65;color:#F1F5F9;margin-bottom:22px;max-width:680px;margin-left:auto;margin-right:auto}
+.q-em{color:#C9A84C;font-style:normal;font-weight:700}
+.q-attr{color:#64748B;font-size:11px;letter-spacing:1.8px;text-transform:uppercase}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  nav .nav-links-group,.nav-cta-btn{display:none}
+  .decisions-2col{grid-template-columns:1fr}
+  .cases-4col{grid-template-columns:1fr 1fr}
+  .carrier-2col{grid-template-columns:1fr}
+  .footer-3col{grid-template-columns:1fr}
+  .section-pad{padding:60px 16px}
+}
+@media(max-width:480px){
+  .cases-4col{grid-template-columns:1fr}
+  .stats-5col .stat-cell:nth-child(n+4){display:none}
+  .stats-5col{grid-template-columns:repeat(3,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.particle{animation:none;opacity:1;transform:none}
+  .niche-bar{transition:none}
+}
+</style>
+</head>
+<body class="bg-navy">
+
+<!-- SCROLL PROGRESS -->
+<div id="scroll-bar"></div>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-grid"></div>
+  <div class="gate-glow"></div>
+
+  <!-- Floating particles behind card -->
+  <div id="gate-particles" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"></div>
+
+  <div class="gate-card">
+    <!-- Lock icon -->
+    <div style="display:flex;justify-content:center;margin-bottom:28px">
+      <div class="lock-ring">
+        <svg width="28" height="32" viewBox="0 0 28 32" fill="none">
+          <rect x="4" y="14" width="20" height="16" rx="3" stroke="#C9A84C" stroke-width="1.5"/>
+          <path d="M8 14V10C8 6.686 10.686 4 14 4s6 2.686 6 6v4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="14" cy="22" r="2.5" fill="#C9A84C"/>
+          <line x1="14" y1="24.5" x2="14" y2="27" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <h1 style="font-family:Georgia,serif;font-size:22px;font-weight:700;color:#fff;text-align:center;margin-bottom:6px">Restricted Access</h1>
+    <p style="text-align:center;color:#64748B;font-size:13px;margin-bottom:28px">MGA to Carrier · The $120M Blueprint<br><span style="color:rgba(201,168,76,0.5);font-size:11px;letter-spacing:1px">Samuel Kennet Rajkumar · June 2026</span></p>
+
+    <!-- Input -->
+    <div style="position:relative;margin-bottom:8px">
+      <input id="pwd" class="pwd-input" type="password" placeholder="Enter access code" autocomplete="off" onkeydown="if(event.key==='Enter')unlock()">
+      <button onclick="toggleShow()" tabindex="-1" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;padding:4px" aria-label="Toggle visibility">
+        <svg id="eye-icon" width="18" height="18" fill="none" stroke="rgba(100,116,139,0.7)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <p id="pwd-err" style="color:#F87171;font-size:12px;text-align:center;margin-bottom:12px;display:none">⚠ Incorrect access code. Please try again.</p>
+
+    <button class="gate-btn" onclick="unlock()">Access Document →</button>
+
+    <p style="color:rgba(100,116,139,0.45);font-size:11px;text-align:center;margin-top:18px;letter-spacing:0.5px">For authorised personnel only · Confidential</p>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div style="color:#C9A84C;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase">MGA Blueprint <span style="color:rgba(201,168,76,0.4)">2026</span></div>
+    <div class="nav-links-group" style="display:flex;gap:28px">
+      <a href="#advantage" class="nav-link" data-section="advantage">The Model</a>
+      <a href="#revenue" class="nav-link" data-section="revenue">Revenue</a>
+      <a href="#decisions" class="nav-link" data-section="decisions">Decisions</a>
+      <a href="#cases" class="nav-link" data-section="cases">Benchmarks</a>
+      <a href="#carrier" class="nav-link" data-section="carrier">Conversion</a>
+    </div>
+    <a href="#" class="nav-cta-btn" style="background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;padding:7px 18px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:0.5px;transition:background 0.2s" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.12)'">Download ↓</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero-section" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-ring" style="width:640px;height:640px"></div>
+    <div class="hero-ring" style="width:380px;height:380px;border-color:rgba(201,168,76,0.1)"></div>
+    <div class="hero-ring" style="width:180px;height:180px;border-color:rgba(201,168,76,0.14)"></div>
+    <div id="hero-particles" style="position:absolute;inset:0;overflow:hidden;pointer-events:none"></div>
+
+    <div style="position:relative;z-index:2">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        Confidential · June 2026
+      </div>
+      <h1 class="hero-title">MGA to Carrier<br><span class="hero-title-accent">The $120M Blueprint</span></h1>
+      <p class="hero-sub">Fastest path from MGA founding to admitted carrier in 7 years — underwriting discipline as the only durable moat.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-gold" onclick="document.getElementById('revenue').scrollIntoView({behavior:'smooth'})">View Revenue Ramp <span style="font-size:16px">→</span></button>
+        <button class="btn-ghost" onclick="document.getElementById('decisions').scrollIntoView({behavior:'smooth'})">5 Decision Points</button>
+      </div>
+      <p style="margin-top:20px;color:#64748B;font-size:12.5px;letter-spacing:0.5px">Samuel Kennet Rajkumar</p>
+    </div>
+
+    <!-- Scroll hint -->
+    <div style="position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:bob 2.2s ease-in-out infinite">
+      <span style="color:rgba(201,168,76,0.45);font-size:9.5px;letter-spacing:2px;text-transform:uppercase">scroll</span>
+      <svg width="14" height="22" viewBox="0 0 14 22" fill="none"><rect x="1" y="1" width="12" height="20" rx="6" stroke="rgba(201,168,76,0.35)" stroke-width="1.2"/><rect x="5.5" y="3.5" width="3" height="6" rx="1.5" fill="rgba(201,168,76,0.45)"/></svg>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner" id="ticker"></div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stat-row" id="stats">
+    <div class="stats-5col" style="max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)">
+      <div class="stat-cell"><div class="stat-num" id="c1">—</div><div class="stat-label">GWP Year 5</div></div>
+      <div class="stat-cell"><div class="stat-num" id="c2">—</div><div class="stat-label">Years to Carrier</div></div>
+      <div class="stat-cell"><div class="stat-num" id="c3">—</div><div class="stat-label">Loss Ratio Cap</div></div>
+      <div class="stat-cell"><div class="stat-num" id="c4">—</div><div class="stat-label">Decision Points</div></div>
+      <div class="stat-cell" style="border-right:none"><div class="stat-num" id="c5">—</div><div class="stat-label">Startup Capital</div></div>
+    </div>
+  </section>
+
+  <!-- MGA ADVANTAGE -->
+  <section style="background:#0A2342" id="advantage">
+    <div class="section-pad">
+      <div class="section-max">
+        <div style="text-align:center;margin-bottom:52px" class="reveal">
+          <div class="section-eyebrow eyebrow-gold">01 · The Model</div>
+          <h2 class="section-h2" style="color:#fff">Why the MGA model wins</h2>
+          <p class="section-lead" style="margin:0 auto;color:rgba(148,163,184,0.8)">Capital-efficient entry with zero balance sheet risk — the ideal launchpad to a full insurance carrier.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px">
+          <div class="adv-card reveal"><div class="adv-icon">🛡️</div><div class="adv-title">Zero balance sheet risk</div><div class="adv-body">Risk stays with the carrier. Your exposure is E&O only — never catastrophic loss events. Full statutory capital freedom.</div><span class="tag-pill tag-green">MGA core advantage</span></div>
+          <div class="adv-card reveal d1"><div class="adv-icon">⚡</div><div class="adv-title">3–12 month speed to market</div><div class="adv-body">Launch in 3–12 months vs. 12–36 for a carrier. Capital requirement $500K–$1.75M vs. $10M–$50M+. Fastest regulated launch.</div><span class="tag-pill tag-amber">3–12 months</span></div>
+          <div class="adv-card reveal d2"><div class="adv-icon">💎</div><div class="adv-title">Five revenue streams</div><div class="adv-body">Commission (15–25%) + profit share (5–15%) + policy fees + TPA fees + tech licensing. Carriers earn premium only. MGAs earn from every angle.</div><span class="tag-pill tag-teal">5 income sources</span></div>
+        </div>
+
+        <!-- Niche table with animated fill bars -->
+        <div class="niche-card reveal">
+          <div class="niche-head">
+            <span style="color:#E2E8F0;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase">Top 2026 Niches</span>
+            <span style="color:#64748B;font-size:11px">Average commission</span>
+          </div>
+          <div class="niche-row" data-pct="87"><span class="niche-name">Cyber Liability (SME)</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">20–25%</span></div>
+          <div class="niche-row" data-pct="100"><span class="niche-name">Cannabis / CBD</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">22–30%</span></div>
+          <div class="niche-row" data-pct="70"><span class="niche-name">E&S Property (Hard Market)</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">15–22%</span></div>
+          <div class="niche-row" data-pct="83"><span class="niche-name">Professional Liability (Tech)</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">18–25%</span></div>
+          <div class="niche-row" data-pct="90"><span class="niche-name">Parametric / Climate Risk</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">20–28%</span></div>
+          <div class="niche-row" data-pct="55"><span class="niche-name">Workers Comp (Artisan)</span><div class="niche-bar-wrap"><div class="niche-bar"></div></div><span class="niche-pct">12–18%</span></div>
+        </div>
+
+        <!-- Capital callout -->
+        <div style="margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px" class="reveal">
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;text-align:center"><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#C9A84C">$480K</div><div style="color:#64748B;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Min. startup capital</div></div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;text-align:center"><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#C9A84C">$1.75M</div><div style="color:#64748B;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Typical startup capital</div></div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;text-align:center"><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#C9A84C">24 mo</div><div style="color:#64748B;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Runway required</div></div>
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px;text-align:center"><div style="font-family:Georgia,serif;font-size:26px;font-weight:700;color:#C9A84C">18–24</div><div style="color:#64748B;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Months to breakeven</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVENUE RAMP -->
+  <section style="background:#061629" id="revenue">
+    <div class="section-pad">
+      <div class="section-max">
+        <div style="text-align:center;margin-bottom:52px" class="reveal">
+          <div class="section-eyebrow eyebrow-gold">02 · The Ramp</div>
+          <h2 class="section-h2" style="color:#fff">5-year revenue trajectory</h2>
+          <p class="section-lead" style="margin:0 auto;color:rgba(148,163,184,0.8)">From $6.5M GWP in Year 1 to $100M by Year 5 — net income positive by Year 2 for disciplined operators.</p>
+        </div>
+        <canvas id="revenueChart" height="290" class="reveal"></canvas>
+        <div class="alert-box reveal" style="margin:20px 0">
+          <span class="alert-icon">⚡</span>
+          <div><div class="alert-title">Breakeven Risk Zone</div><div class="alert-body">Most MGAs exhaust capital at months 14–20 — just before profit commission kicks in. Raise a 24-month minimum runway and stress-test at 130% loss ratio. This is not a cash flow issue; it is a survival issue.</div></div>
+        </div>
+        <div style="overflow-x:auto" class="reveal">
+          <table class="rev-tbl">
+            <thead><tr><th>Year</th><th>GWP Target</th><th>Commission</th><th>Gross Revenue</th><th>Op. Costs</th><th style="text-align:right">Net Income</th></tr></thead>
+            <tbody id="revBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISION POINTS -->
+  <section style="background:#0A2342" id="decisions">
+    <div class="section-pad">
+      <div class="section-max">
+        <div style="text-align:center;margin-bottom:52px" class="reveal">
+          <div class="section-eyebrow eyebrow-gold">03 · The Playbook</div>
+          <h2 class="section-h2" style="color:#fff">5 survival decision points</h2>
+          <p class="section-lead" style="margin:0 auto;color:rgba(148,163,184,0.8)">Research across 200+ MGA startups identifies 5 critical junctures where successful and failed MGAs permanently diverge.</p>
+        </div>
+        <div class="decisions-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="decision-card reveal"><div class="d-month">M<br>1–3</div><div><div class="d-title">Niche commitment</div><div class="d-body">Stay narrow. Resist every temptation to add lines. Depth beats breadth. MGAs that fail overwhelmingly do so by writing too broadly without differentiation.</div><div class="d-ok">✓ Stay in 1–2 lines for first 3 years</div></div></div>
+          <div class="decision-card reveal d1"><div class="d-month">M<br>6–12</div><div><div class="d-title">Pricing discipline</div><div class="d-body">Walk away from underpriced business — always. Combined ratio above 110% destroys profit commission at year-end. Market share is irrelevant without margins.</div><div class="d-ok">✓ Price for profit first, not market share</div></div></div>
+          <div class="decision-card reveal"><div class="d-month">M<br>12–18</div><div><div class="d-title">Capital raise</div><div class="d-body">Raise 24-month runway proactively — even when things look excellent. Profit commission almost never arrives before cash runs out on the first cycle.</div><div class="d-ok">✓ Stress-test runway at 130% loss ratio</div></div></div>
+          <div class="decision-card reveal d1"><div class="d-month">M<br>18–30</div><div><div class="d-title">Reserve adequacy</div><div class="d-body">Reserve conservatively; accept lower early income. Underreserving to show profitability creates year-end loss development shock that permanently kills carrier trust.</div><div class="d-ok">✓ Set IBNR high; release as positive surprises</div></div></div>
+          <div class="decision-card reveal" style="grid-column:1/-1"><div class="d-month">M<br>24–36</div><div><div class="d-title">Carrier diversification</div><div class="d-body" style="max-width:680px">Add a 2nd carrier before you need one. Single-carrier dependency is the most catastrophic MGA failure mode. A $180M book evaporates within 90 days of MGAA termination. Never let any single carrier represent more than 60% of GWP. Maintain 2–3 active relationships at all times.</div><div class="d-ok">✓ Maintain 2–3 active carrier relationships at all times</div></div></div>
+        </div>
+        <div class="warn-box reveal" style="margin-top:18px"><div class="warn-title">⚠ Failure Trajectory</div><div class="warn-body">Capital exhaustion M14–20 → MGAA audit M20–28 → carrier restricts binding authority → termination notice M30–42 (90–180 day wind-down) → book transferred at pennies on the dollar. Assets sold at under 10 cents on dollar invested. Identifiable, preventable, fatal.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section style="background:#F0F4F8" id="cases">
+    <div class="section-pad">
+      <div class="section-max">
+        <div style="text-align:center;margin-bottom:52px" class="reveal">
+          <div class="section-eyebrow eyebrow-teal">04 · The Proof</div>
+          <h2 class="section-h2" style="color:#0A2342">Best-in-class benchmarks</h2>
+          <p class="section-lead" style="margin:0 auto">Four MGAs that executed the blueprint perfectly. One trait shared by all: underwriting discipline was non-negotiable from Day 1.</p>
+        </div>
+        <div class="cases-4col" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+          <div class="case-card reveal"><div class="case-founded">Founded 1930</div><div class="case-name">Markel Corp.</div><div class="case-path">MGA 1930 → Carrier 1987 → NYSE: MKL</div><div class="case-num">$14B</div><div class="case-lbl">2025 Revenue</div><div class="case-body">Started as taxicab MGA. Culture of underwriting excellence. Converted via IPO. Now manages $25B+ investment portfolio Buffett-style.</div><span class="tag-pill tag-teal" style="margin-top:12px">95 yrs of discipline</span></div>
+          <div class="case-card reveal d1"><div class="case-founded">Founded 2014</div><div class="case-name">Palomar Holdings</div><div class="case-path">MGA 2014 → Carrier 2018 → IPO 2019</div><div class="case-num">$1.1B</div><div class="case-lbl">2024 GWP</div><div class="case-body">Earthquake MGA with proprietary CAT models. Loss ratio 30–45% — best in market. Used State National as fronting carrier to build track record first.</div><span class="tag-pill tag-green" style="margin-top:12px">LR 30–45% peak</span></div>
+          <div class="case-card reveal d2"><div class="case-founded">Founded 2017</div><div class="case-name">Coalition Inc.</div><div class="case-path">MGA 2017 → Carrier 2021 · $5B val.</div><div class="case-num">$800M</div><div class="case-lbl">2024 GWP</div><div class="case-body">Cyber MGA with active risk platform. Real-time threat monitoring. Technology enabled 10× UW productivity per underwriter. Lloyd's Coverholder.</div><span class="tag-pill tag-amber" style="margin-top:12px">10× UW productivity</span></div>
+          <div class="case-card reveal d3"><div class="case-founded">Founded 2017</div><div class="case-name">Pie Insurance</div><div class="case-path">MGA 2017 → Carrier 2020 · 50 states</div><div class="case-num">$400M</div><div class="case-lbl">2024 GWP</div><div class="case-body">Workers comp for SMBs via API integrations with ADP, Gusto, Paychex. Payroll data as proprietary risk scoring. $315M Series D for conversion.</div><span class="tag-pill tag-teal" style="margin-top:12px">API-embedded dist.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATH TO CARRIER -->
+  <section style="background:#fff" id="carrier">
+    <div class="section-pad">
+      <div class="section-max">
+        <div style="text-align:center;margin-bottom:52px" class="reveal">
+          <div class="section-eyebrow eyebrow-teal">05 · The Destination</div>
+          <h2 class="section-h2" style="color:#0A2342">Path to carrier conversion</h2>
+          <p class="section-lead" style="margin:0 auto">Carrier status removes fronting dependency, unlocks investment income that dwarfs commission, and creates a defensible balance sheet.</p>
+        </div>
+        <div class="carrier-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+          <div class="reveal">
+            <h3 style="color:#0A2342;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #E5E7EB">Conversion triggers — all must be met</h3>
+            <div class="step-item"><div class="step-n">✓</div><div><div class="step-title">GWP $50–75M+ for 2+ consecutive years</div><div class="step-body">Below this, carrier economics don't justify regulatory burden and capital outlay</div></div></div>
+            <div class="step-item"><div class="step-n">✓</div><div><div class="step-title">Loss ratio below 65% for 3+ years</div><div class="step-body">Regulators and A.M. Best require demonstrated underwriting discipline before licensing</div></div></div>
+            <div class="step-item"><div class="step-n">✓</div><div><div class="step-title">NAIC RBC ratio exceeds 200%</div><div class="step-body">Minimum statutory surplus: $5M–10M+ depending on domicile state</div></div></div>
+            <div class="step-item"><div class="step-n">✓</div><div><div class="step-title">Full C-suite in place</div><div class="step-body">CEO / CFO / CUO / CRO / CCO — NAIC requires qualified officers in each role</div></div></div>
+            <div class="step-item"><div class="step-n">✓</div><div><div class="step-title">FCAS actuary on staff or retainer</div><div class="step-body">State filings require actuarial certification of reserve adequacy each quarter-end</div></div></div>
+          </div>
+          <div class="reveal d1">
+            <h3 style="color:#0A2342;font-size:10px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #E5E7EB">Conversion pathways</h3>
+            <div class="pathway-item"><div class="pathway-header"><div class="pathway-name">Shell carrier acquisition</div><span class="badge-fast">FASTEST</span></div><div class="pathway-body">Buy a dormant admitted carrier. Inherits existing licenses and regulatory approvals. Full operational control immediately.</div><div class="pathway-meta"><span><strong>Timeline:</strong> 6–12 months</span><span><strong>Cost:</strong> $2M–10M</span></div></div>
+            <div class="pathway-item"><div class="pathway-header"><div class="pathway-name">Cell / Protected Cell Company</div></div><div class="pathway-body">Hold risk on own balance sheet without a full carrier license. Sponsored by Chubb, State National, Trisura, Employers Re.</div><div class="pathway-meta"><span><strong>Timeline:</strong> 3–9 months</span><span><strong>Cost:</strong> $1M–5M</span></div></div>
+            <div class="pathway-item"><div class="pathway-header"><div class="pathway-name">Greenfield carrier formation</div></div><div class="pathway-body">Form new insurance company from scratch. Slowest and highest cost, but full control. Preferred states: Delaware, Texas, Arizona.</div><div class="pathway-meta"><span><strong>Timeline:</strong> 18–36 months</span><span><strong>Cost:</strong> $10M–25M</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-sec">
+    <div class="reveal" style="max-width:720px;margin:0 auto">
+      <div class="q-mark">"</div>
+      <p class="q-text">The MGAs that win say <em class="q-em">NO</em> more than <em class="q-em">YES</em>. Underwriting discipline is not a cost center — it is the <em class="q-em">entire product</em>. Build your culture around the word NO from Day 1, and every other metric will follow.</p>
+      <div class="q-attr">Samuel Kennet Rajkumar · MGA Startup Blueprint 2026</div>
+    </div>
+    <div class="footer-3col reveal" style="max-width:1040px;margin:48px auto 0;padding-top:36px;border-top:1px solid rgba(201,168,76,0.1);display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:center">
+      <div><div style="color:#C9A84C;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px">Document</div><div style="color:rgba(255,255,255,0.65);font-size:13px">MGA Startup Blueprint 2026</div></div>
+      <div><div style="color:#C9A84C;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px">Classification</div><div style="color:rgba(255,255,255,0.65);font-size:13px">Confidential · Investor's Eyes Only</div></div>
+      <div><div style="color:#C9A84C;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px">Coverage</div><div style="color:rgba(255,255,255,0.65);font-size:13px">19 Countries · All Lines of Business</div></div>
+    </div>
+  </footer>
+
+</div><!-- /main -->
+
+<script>
+// ─── AUTH ──────────────────────────────────────────────────────────
+const PASS='raj';
+let eyeVisible=false;
+
+function toggleShow(){
+  const i=document.getElementById('pwd');
+  eyeVisible=!eyeVisible;
+  i.type=eyeVisible?'text':'password';
+  const icon=document.getElementById('eye-icon');
+  if(eyeVisible){icon.querySelector('circle').setAttribute('r','0');icon.innerHTML='<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24" stroke="rgba(201,168,76,0.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="1" y1="1" x2="23" y2="23" stroke="rgba(201,168,76,0.7)" stroke-width="1.5" stroke-linecap="round"/>';}
+  else{icon.innerHTML='<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" stroke="rgba(100,116,139,0.7)" stroke-width="1.5" fill="none"/><circle cx="12" cy="12" r="3" stroke="rgba(100,116,139,0.7)" stroke-width="1.5" fill="none"/>';}
+}
+
+function unlock(){
+  const val=document.getElementById('pwd').value.trim();
+  const input=document.getElementById('pwd');
+  const err=document.getElementById('pwd-err');
+  if(val===PASS){
+    input.classList.add('success');
+    input.value='';
+    const gate=document.getElementById('gate');
+    gate.classList.add('gate-exit');
+    setTimeout(()=>{
+      gate.style.display='none';
+      const main=document.getElementById('main');
+      main.style.display='block';
+      main.classList.add('main-enter');
+      sessionStorage.setItem('mga_auth','1');
+      initMain();
+    },520);
+  } else {
+    input.classList.add('error');
+    err.style.display='block';
+    setTimeout(()=>{input.classList.remove('error');},400);
+    input.value='';
+    input.focus();
+  }
+}
+
+if(sessionStorage.getItem('mga_auth')==='1'){
+  document.getElementById('gate').style.display='none';
+  document.getElementById('main').style.display='block';
+  document.addEventListener('DOMContentLoaded',initMain);
+}
+
+// ─── GATE PARTICLES ───────────────────────────────────────────────
+const gLabels=['MGA','GWP','MGAA','LR%','RBC','$120M','FCAS','IPO','E&S','TPA'];
+const gp=document.getElementById('gate-particles');
+gLabels.forEach(l=>{
+  const el=document.createElement('div');
+  el.style.cssText=`position:absolute;color:rgba(201,168,76,0.2);font-size:10px;font-family:monospace;letter-spacing:1px;left:${5+Math.random()*90}%;top:${5+Math.random()*90}%;animation:float-particle ${8+Math.random()*7}s linear ${Math.random()*5}s infinite`;
+  el.textContent=l;
+  gp.appendChild(el);
+});
+
+// ─── INIT MAIN ────────────────────────────────────────────────────
+function initMain(){
+  initNav();
+  initHeroParticles();
+  initTicker();
+  initCounters();
+  initScrollReveal();
+  initNicheBars();
+  initChart();
+  initRevTable();
+  initScrollProgress();
+}
+
+function initScrollProgress(){
+  const bar=document.getElementById('scroll-bar');
+  window.addEventListener('scroll',()=>{
+    const d=document.documentElement;
+    bar.style.width=((window.scrollY/(d.scrollHeight-d.clientHeight))*100)+'%';
+  });
+}
+
+// ─── NAV ──────────────────────────────────────────────────────────
+function initNav(){
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>70);});
+
+  const sections=['advantage','revenue','decisions','cases','carrier'];
+  const links=document.querySelectorAll('.nav-link[data-section]');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const l=document.querySelector(`.nav-link[data-section="${e.target.id}"]`);
+        if(l)l.classList.add('active');
+      }
+    });
+  },{threshold:0.4});
+  sections.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el);});
+}
+
+// ─── HERO PARTICLES ───────────────────────────────────────────────
+function initHeroParticles(){
+  const labels=['$120M','65%','24mo','GWP','LR','RBC','MGAA','$5B','7yr','E&S','200%','FCAS','IPO','MGA','20%'];
+  const c=document.getElementById('hero-particles');
+  labels.forEach(l=>{
+    const el=document.createElement('div');
+    el.className='particle';
+    el.style.cssText=`left:${4+Math.random()*92}%;top:${5+Math.random()*88}%;animation-duration:${7+Math.random()*9}s;animation-delay:${Math.random()*7}s`;
+    el.textContent=l;
+    c.appendChild(el);
+  });
+}
+
+// ─── TICKER ───────────────────────────────────────────────────────
+function initTicker(){
+  const items=['GWP','Loss Ratio','MGAA','Profit Commission','Binding Authority','IBNR','RBC Ratio','Fronting Carrier','FCAS Actuary','E&S Market','Cat Modelling','Reinsurance Treaty','Carrier Conversion','Underwriting Discipline','Capital Runway'];
+  const t=document.getElementById('ticker');
+  const dbl=[...items,...items];
+  t.innerHTML=dbl.map(i=>`<span class="ticker-item"><span class="ticker-dot"></span>${i}</span>`).join('');
+}
+
+// ─── COUNTERS ─────────────────────────────────────────────────────
+function initCounters(){
+  function animC(el,end,pre,suf,dec=0,dur=1800){
+    let t0=null;
+    function step(ts){if(!t0)t0=ts;const p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,4),v=e*end;
+    el.textContent=pre+(dec?v.toFixed(dec):Math.round(v))+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  const data=[{id:'c1',e:120,p:'$',s:'M'},{id:'c2',e:7,p:'',s:' yrs'},{id:'c3',e:65,p:'<',s:'%'},{id:'c4',e:5,p:'',s:''},{id:'c5',e:1.75,p:'$',s:'M',d:2}];
+  let done=false;
+  const statsEl=document.getElementById('stats');
+  if(!statsEl)return;
+  new IntersectionObserver(([en])=>{if(en.isIntersecting&&!done){done=true;data.forEach(d=>animC(document.getElementById(d.id),d.e,d.p,d.s,d.d||0));}},{threshold:.3}).observe(statsEl);
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────────
+function initScrollReveal(){
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1,rootMargin:'0px 0px -24px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ─── NICHE BARS ───────────────────────────────────────────────────
+function initNicheBars(){
+  const rows=document.querySelectorAll('.niche-row[data-pct]');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){const bar=e.target.querySelector('.niche-bar');if(bar)bar.style.width=e.target.dataset.pct+'%';obs.unobserve(e.target);}});
+  },{threshold:.5});
+  rows.forEach(r=>obs.observe(r));
+}
+
+// ─── REVENUE CHART ────────────────────────────────────────────────
+function initChart(){
+  const canvas=document.getElementById('revenueChart');if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;
+  const W=Math.min(canvas.parentElement.offsetWidth-0,960);
+  const H=290;
+  canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const pad={top:32,right:20,bottom:48,left:54};
+  const cW=W-pad.left-pad.right,cH=H-pad.top-pad.bottom;
+  const yrs=['Year 1','Year 2','Year 3','Year 4','Year 5'];
+  const gwp=[6.5,16,35,65,100];
+  const net=[-0.3,1.4,4.7,9.7,17];
+  const maxV=120;
+  const bW=cW/yrs.length*0.44;
+  const xc=i=>pad.left+(i+.5)*(cW/yrs.length);
+  const yv=v=>pad.top+cH-Math.max(v,0)/maxV*cH;
+
+  // Tooltip state
+  let hoverIdx=-1;
+  canvas.addEventListener('mousemove',e=>{
+    const rect=canvas.getBoundingClientRect();
+    const mx=(e.clientX-rect.left)*(W/rect.width);
+    let found=-1;
+    yrs.forEach((_,i)=>{if(Math.abs(mx-xc(i))<bW)found=i;});
+    if(found!==hoverIdx){hoverIdx=found;draw(1);}
+  });
+  canvas.addEventListener('mouseleave',()=>{hoverIdx=-1;draw(1);});
+
+  function draw(p){
+    ctx.clearRect(0,0,W,H);
+
+    // Grid lines
+    [0,30,60,90,120].forEach(v=>{
+      const y=yv(v);
+      ctx.beginPath();ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=1;ctx.setLineDash([3,5]);
+      ctx.moveTo(pad.left,y);ctx.lineTo(W-pad.right,y);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='rgba(148,163,184,0.5)';ctx.font='10px system-ui';ctx.textAlign='right';
+      ctx.fillText('$'+v+'M',pad.left-8,y+4);
+    });
+
+    yrs.forEach((yr,i)=>{
+      // Bar
+      const bh=(gwp[i]*p/maxV)*cH,by=pad.top+cH-bh,bx=xc(i)-bW/2;
+      const isHov=hoverIdx===i;
+      const isLast=i===4;
+      if(isLast){
+        const grad=ctx.createLinearGradient(0,by,0,by+bh);
+        grad.addColorStop(0,'rgba(201,168,76,0.9)');
+        grad.addColorStop(1,'rgba(201,168,76,0.5)');
+        ctx.fillStyle=grad;
+      } else {
+        const alpha=(0.45+i*0.1)*(isHov?1.25:1);
+        ctx.fillStyle=`rgba(0,109,119,${Math.min(alpha,0.95)})`;
+      }
+      if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bW,bh,[4,4,0,0]);ctx.fill();}
+      else{ctx.fillRect(bx,by,bW,bh);}
+
+      // Hover overlay
+      if(isHov){
+        ctx.fillStyle='rgba(255,255,255,0.07)';
+        if(ctx.roundRect){ctx.beginPath();ctx.roundRect(bx,by,bW,bh,[4,4,0,0]);ctx.fill();}
+        else{ctx.fillRect(bx,by,bW,bh);}
+        // Tooltip
+        const tw=90,th=36,tx=Math.min(Math.max(xc(i)-tw/2,4),W-tw-4),ty=Math.max(by-th-8,4);
+        ctx.fillStyle='rgba(15,45,74,0.95)';
+        ctx.beginPath();if(ctx.roundRect)ctx.roundRect(tx,ty,tw,th,4);else ctx.rect(tx,ty,tw,th);ctx.fill();
+        ctx.strokeStyle='rgba(201,168,76,0.3)';ctx.lineWidth=1;ctx.stroke();
+        ctx.fillStyle='#C9A84C';ctx.font='bold 11px system-ui';ctx.textAlign='center';
+        ctx.fillText('$'+gwp[i]+'M GWP',tx+tw/2,ty+14);
+        ctx.fillStyle='rgba(148,163,184,0.85)';ctx.font='10px system-ui';
+        ctx.fillText('Net: $'+net[i]+'M',tx+tw/2,ty+28);
+      }
+
+      // Value label (after animation)
+      if(p>0.88&&!isHov){
+        const a=Math.min((p-0.88)/0.12,1);
+        ctx.fillStyle=`rgba(255,255,255,${a})`;
+        ctx.font='bold 11px system-ui';ctx.textAlign='center';
+        ctx.fillText('$'+gwp[i]+'M',xc(i),by-8);
+      }
+
+      // X labels
+      ctx.fillStyle='rgba(148,163,184,0.7)';ctx.font='11.5px system-ui';ctx.textAlign='center';
+      ctx.fillText(yr,xc(i),H-10);
+    });
+
+    // Net income line
+    if(p>0.25){
+      const la=Math.min((p-0.25)/0.5,1);
+      const pts=Math.ceil(yrs.length*Math.min(p,1));
+      ctx.beginPath();ctx.strokeStyle=`rgba(201,168,76,${la*0.85})`;ctx.lineWidth=2.5;ctx.setLineDash([]);
+      net.slice(0,pts).forEach((v,i)=>{const px=xc(i),py=yv(v+4)+(4/maxV)*cH;i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);});
+      ctx.stroke();
+      net.slice(0,pts).forEach((v,i)=>{
+        const px=xc(i),py=yv(v+4)+(4/maxV)*cH;
+        ctx.beginPath();ctx.fillStyle=`rgba(201,168,76,${la})`;ctx.arc(px,py,4,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.fillStyle='rgba(15,45,74,1)';ctx.arc(px,py,2,0,Math.PI*2);ctx.fill();
+      });
+    }
+
+    // Legend
+    ctx.fillStyle='rgba(0,109,119,0.85)';ctx.fillRect(pad.left,6,10,10);
+    ctx.fillStyle='rgba(148,163,184,0.7)';ctx.font='10.5px system-ui';ctx.textAlign='left';ctx.fillText('GWP ($M)',pad.left+14,15);
+    ctx.fillStyle='rgba(201,168,76,0.85)';ctx.fillRect(pad.left+96,10,18,2.5);
+    ctx.fillStyle='rgba(148,163,184,0.7)';ctx.fillText('Net income ($M)',pad.left+118,15);
+  }
+
+  let prog=0,started=false;
+  function animate(){draw(prog);prog=Math.min(prog+.022,1);if(prog<1)requestAnimationFrame(animate);}
+  new IntersectionObserver(([e])=>{if(e.isIntersecting&&!started){started=true;animate();}},{threshold:.2}).observe(canvas);
+}
+
+// ─── REVENUE TABLE ────────────────────────────────────────────────
+function initRevTable(){
+  const rows=[
+    ['Year 1','$5–8M','18%','$0.9–1.4M','$1.2–1.6M','Breakeven','rgba(148,163,184,0.7)'],
+    ['Year 2','$12–20M','20%','$2.4–4M','$1.5–2M','$0.9–2M','#6EE7B7'],
+    ['Year 3','$25–45M','22%','$5.5–9.9M','$2–3M','$2.5–7M','#6EE7B7'],
+    ['Year 4','$50–80M','22%','$11–17.6M','$3–4.5M','$6.5–13M','#6EE7B7'],
+    ['Year 5','$80–120M','23%','$18.4–27.6M','$4–6M','$12–22M','#C9A84C'],
+  ];
+  const b=document.getElementById('revBody');
+  if(b)rows.forEach(([yr,g,c,r,op,n,nc])=>{
+    b.innerHTML+=`<tr><td style="color:rgba(148,163,184,0.75)">${yr}</td><td style="color:#fff;font-weight:600">${g}</td><td style="color:rgba(148,163,184,0.7)">${c}</td><td style="color:rgba(255,255,255,0.7)">${r}</td><td style="color:rgba(148,163,184,0.6)">${op}</td><td style="color:${nc};font-weight:700;text-align:right">${n}</td></tr>`;
+  });
+}
+
+// ─── BOB ANIMATION (hero scroll hint) ─────────────────────────────
+const bobStyle=document.createElement('style');
+bobStyle.textContent='@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}';
+document.head.appendChild(bobStyle);
+</script>
+</body>
+</html>
